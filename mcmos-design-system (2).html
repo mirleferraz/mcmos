@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mCMOs — Design System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100;0,300;0,400;0,700;1,100;1,300;1,400;1,700&family=Noto+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <style>
+
+    /* ════════════════════════════════════════════
+       DESIGN SYSTEM TOKENS — mCMOs
+    ════════════════════════════════════════════ */
+    :root {
+      /* ── BRAND COLORS ── */
+      --black:        #0d0d0d;
+      --white:        #ffffff;
+      --orange:       #e8843a;
+      --orange-dark:  #d4612a;
+      --orange-light: #f0a872;
+      --orange-10:    rgba(232,132,58,.10);
+      --orange-20:    rgba(232,132,58,.20);
+
+      --blue-dark:    #1a4fba;
+      --blue-mid:     #3a6fd8;
+      --blue-light:   #a8c4f0;
+      --blue-10:      rgba(26,79,186,.10);
+      --blue-20:      rgba(26,79,186,.20);
+
+      /* ── NEUTRALS ── */
+      --gray-950:     #0d0d0d;
+      --gray-900:     #1a1a1a;
+      --gray-800:     #2e2e2e;
+      --gray-700:     #444444;
+      --gray-600:     #555555;
+      --gray-500:     #777777;
+      --gray-400:     #999999;
+      --gray-300:     #bbbbbb;
+      --gray-200:     #e0e0e0;
+      --gray-100:     #f0f0f0;
+      --gray-50:      #f8f8f8;
+      --cream:        #f0ede8;
+
+      /* ── SEMANTIC COLORS ── */
+      --success:      #16a34a;
+      --success-bg:   rgba(22,163,74,.10);
+      --error:        #dc2626;
+      --error-bg:     rgba(220,38,38,.10);
+      --warning:      #d97706;
+
+      /* ── TYPOGRAPHY ── */
+      --serif:        'Noto Serif', Georgia, 'Times New Roman', serif;
+      --sans:         'Noto Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      /* ── SPACING ── */
+      --space-1:  4px;
+      --space-2:  8px;
+      --space-3:  12px;
+      --space-4:  16px;
+      --space-5:  20px;
+      --space-6:  24px;
+      --space-8:  32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+
+      /* ── LAYOUT ── */
+      --max-width:  1160px;
+      --radius-sm:  4px;
+      --radius-md:  8px;
+      --radius-lg:  12px;
+      --radius-xl:  16px;
+      --radius-full: 9999px;
+
+      /* ── SHADOWS ── */
+      --shadow-sm:  0 1px 4px rgba(0,0,0,.06);
+      --shadow-md:  0 4px 16px rgba(0,0,0,.08);
+      --shadow-lg:  0 8px 32px rgba(0,0,0,.10);
+      --shadow-xl:  0 16px 48px rgba(0,0,0,.14);
+
+      /* ── Z-INDEX ── */
+      --z-base:    1;
+      --z-dropdown: 10;
+      --z-sticky:  90;
+      --z-modal:   200;
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--sans); color: var(--black); background: var(--white); -webkit-font-smoothing: antialiased; line-height: 1.5; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── DS PAGE SHELL ─── */
+    .ds-page { display: flex; min-height: 100vh; }
+
+    .ds-nav {
+      width: 240px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--black);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .ds-nav-logo {
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .ds-nav-title {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+      margin-bottom: 8px;
+      margin-top: 20px;
+    }
+    .ds-nav a {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 400;
+      color: rgba(255,255,255,.55);
+      padding: 5px 0;
+      transition: color .15s;
+    }
+    .ds-nav a:hover { color: #fff; }
+    .ds-nav a.active { color: var(--orange); font-weight: 600; }
+
+    .ds-main { flex: 1; padding: 56px 64px; max-width: 900px; }
+
+    .ds-section { margin-bottom: 72px; }
+    .ds-section-title {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 400;
+      margin-bottom: 6px;
+      letter-spacing: -.01em;
+    }
+    .ds-section-desc {
+      font-size: 14px;
+      color: var(--gray-500);
+      font-weight: 300;
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+    .ds-divider { height: 1px; background: var(--gray-200); margin: 40px 0; }
+
+    .ds-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 12px;
+    }
+
+    /* Token row */
+    .token-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+    .token-item { border: 1px solid var(--gray-200); border-radius: var(--radius-md); overflow: hidden; }
+    .token-swatch { height: 56px; }
+    .token-info { padding: 10px 12px; }
+    .token-name { font-size: 11px; font-weight: 700; color: var(--black); margin-bottom: 2px; }
+    .token-value { font-size: 10px; color: var(--gray-400); font-family: monospace; }
+
+    /* ─── TYPOGRAPHY SCALE ─── */
+    .type-specimen { display: flex; flex-direction: column; gap: 0; }
+    .type-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 24px;
+      align-items: baseline;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .type-meta { font-size: 10px; color: var(--gray-400); font-family: monospace; line-height: 1.4; }
+
+    /* ─── COMPONENTS ─── */
+    .comp-grid { display: flex; flex-direction: column; gap: 12px; }
+    .comp-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+    /* ─── SPACING SCALE ─── */
+    .space-grid { display: flex; flex-direction: column; gap: 8px; }
+    .space-row { display: flex; align-items: center; gap: 16px; }
+    .space-bar-wrap { flex: 1; height: 20px; display: flex; align-items: center; }
+    .space-bar { height: 8px; background: var(--orange); border-radius: 2px; }
+    .space-label { font-size: 10px; color: var(--gray-400); font-family: monospace; min-width: 100px; }
+    .space-px { font-size: 11px; font-weight: 600; color: var(--black); min-width: 36px; }
+
+    /* ─── ICON GRID ─── */
+    .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 8px; }
+    .icon-item { border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 14px 8px 10px; text-align: center; cursor: pointer; transition: background .15s, border-color .15s; position: relative; }
+    .icon-item:hover { background: var(--gray-50); border-color: var(--gray-400); }
+    .icon-item svg { display: block; margin: 0 auto 8px; color: var(--black); }
+    .icon-item i { font-size: 22px; color: var(--black); display: block; margin-bottom: 6px; }
+    .icon-name { font-size: 9px; color: var(--gray-400); font-family: monospace; line-height: 1.3; word-break: break-all; transition: color .15s; }
+    .icon-item:hover .icon-name { color: var(--black); }
+    .icon-copied { color: var(--success) !important; font-weight: 700; }
+
+    /* ─── USAGE EXAMPLE ─── */
+    .usage-block {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-top: 16px;
+    }
+    .usage-preview { padding: 32px 24px; }
+    .usage-code {
+      background: var(--gray-950);
+      padding: 16px 20px;
+      font-family: monospace;
+      font-size: 12px;
+      color: rgba(255,255,255,.7);
+      line-height: 1.6;
+      border-top: 1px solid var(--gray-200);
+      overflow-x: auto;
+    }
+    .usage-code .kw { color: #e8843a; }
+    .usage-code .str { color: #a8c4f0; }
+    .usage-code .cm { color: rgba(255,255,255,.3); }
+
+    /* ── mCMOs ACTUAL COMPONENTS ── */
+
+    /* Buttons */
+    .mcm-btn-primary {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--blue-dark); color: var(--white);
+      font-family: var(--sans); font-size: 12px; font-weight: 700;
+      padding: 10px 20px; border-radius: var(--radius-sm);
+      border: none; cursor: pointer; transition: background .15s;
+    }
+    .mcm-btn-primary:hover { background: var(--blue-mid); }
+
+    .mcm-btn-secondary {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--white); color: var(--blue-dark);
+      font-family: var(--sans); font-size: 12px; font-weight: 700;
+      padding: 10px 20px; border-radius: var(--radius-sm);
+      border: 1px solid var(--blue-dark); cursor: pointer; transition: all .15s;
+    }
+    .mcm-btn-secondary:hover { background: var(--blue-10); }
+
+    .mcm-btn-ghost {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: none; color: var(--black);
+      font-family: var(--sans); font-size: 12px; font-weight: 600;
+      padding: 10px 20px; border-radius: var(--radius-sm);
+      border: 1px solid var(--gray-200); cursor: pointer; transition: all .15s;
+    }
+    .mcm-btn-ghost:hover { border-color: var(--black); }
+
+    .mcm-btn-orange {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--orange); color: var(--white);
+      font-family: var(--sans); font-size: 12px; font-weight: 700;
+      padding: 10px 20px; border-radius: var(--radius-sm);
+      border: none; cursor: pointer; transition: background .15s;
+    }
+    .mcm-btn-orange:hover { background: var(--orange-dark); }
+
+    .mcm-btn-dark {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--black); color: var(--white);
+      font-family: var(--sans); font-size: 12px; font-weight: 700;
+      padding: 10px 20px; border-radius: var(--radius-sm);
+      border: none; cursor: pointer; transition: background .15s;
+    }
+    .mcm-btn-dark:hover { background: var(--gray-800); }
+
+    /* Size variants */
+    .mcm-btn-sm { font-size: 11px; padding: 7px 14px; }
+    .mcm-btn-lg { font-size: 13px; padding: 13px 28px; }
+
+    /* Section label */
+    .mcm-section-label {
+      font-size: 10px; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--black);
+      padding-bottom: 8px; border-bottom: 2px solid var(--orange);
+      margin-bottom: 24px;
+    }
+
+    /* Badge */
+    .mcm-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: var(--radius-full);
+    }
+    .mcm-badge-orange { background: var(--orange-10); color: var(--orange-dark); }
+    .mcm-badge-blue   { background: var(--blue-10); color: var(--blue-dark); }
+    .mcm-badge-green  { background: var(--success-bg); color: var(--success); }
+    .mcm-badge-dark   { background: var(--black); color: var(--white); }
+    .mcm-badge-pill {
+      background: var(--gray-50); border: 1px solid var(--gray-200);
+      border-radius: var(--radius-full); padding: 6px 16px;
+      display: inline-flex; align-items: center; gap: 8px; font-size: 12px;
+    }
+
+    /* Eyebrow */
+    .mcm-eyebrow {
+      font-size: 10px; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--orange);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .mcm-eyebrow::before { content: ''; width: 24px; height: 2px; background: var(--orange); flex-shrink: 0; }
+
+    /* Card */
+    .mcm-card {
+      background: var(--white); border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md); overflow: hidden;
+      transition: box-shadow .2s, transform .2s; cursor: pointer;
+    }
+    .mcm-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+    .mcm-card-cover { height: 120px; }
+    .mcm-card-body { padding: 16px; }
+    .mcm-card-cat { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue-dark); margin-bottom: 5px; }
+    .mcm-card-title { font-family: var(--serif); font-size: 15px; line-height: 1.3; margin-bottom: 6px; }
+    .mcm-card:hover .mcm-card-title { color: var(--blue-dark); }
+    .mcm-card-desc { font-size: 12.5px; color: var(--gray-600); font-weight: 300; line-height: 1.55; }
+
+    /* Dark card */
+    .mcm-card-dark {
+      background: var(--black); border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius-md); padding: 24px;
+      transition: background .2s, border-color .2s;
+    }
+    .mcm-card-dark:hover { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.16); }
+
+    /* Input */
+    .mcm-input {
+      width: 100%; padding: 11px 16px;
+      background: var(--white); border: 1px solid var(--gray-200);
+      border-radius: var(--radius-sm); color: var(--black);
+      font-family: var(--sans); font-size: 13px; outline: none;
+      transition: border-color .15s;
+    }
+    .mcm-input:focus { border-color: var(--black); }
+    .mcm-input::placeholder { color: var(--gray-400); }
+    .mcm-input-dark {
+      background: rgba(255,255,255,.07);
+      border-color: rgba(255,255,255,.15); color: var(--white);
+    }
+    .mcm-input-dark::placeholder { color: rgba(255,255,255,.35); }
+    .mcm-input-dark:focus { border-color: rgba(255,255,255,.4); }
+
+    /* Ticker */
+    .mcm-ticker {
+      background: var(--orange); height: 34px; overflow: hidden;
+      display: flex; align-items: center;
+    }
+    .mcm-ticker-inner {
+      display: flex; white-space: nowrap;
+      font-size: 11px; font-weight: 700; color: var(--white);
+      letter-spacing: .04em; text-transform: uppercase;
+      animation: ds-ticker 20s linear infinite;
+    }
+    @keyframes ds-ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .mcm-ticker-item { padding: 0 28px; display: inline-flex; align-items: center; gap: 10px; }
+    .mcm-ticker-sep { color: rgba(255,255,255,.45); }
+
+    /* Avatar */
+    .mcm-avatar { border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); color: var(--white); font-weight: 400; flex-shrink: 0; }
+    .mcm-avatar-sm { width: 36px; height: 36px; font-size: 13px; }
+    .mcm-avatar-md { width: 52px; height: 52px; font-size: 18px; }
+    .mcm-avatar-lg { width: 72px; height: 72px; font-size: 24px; }
+    .mcm-avatar-xl { width: 100px; height: 100px; font-size: 32px; }
+
+    /* Quote block */
+    .mcm-quote {
+      font-family: var(--serif); font-size: 18px; font-style: italic;
+      color: var(--white); line-height: 1.55; text-align: center;
+    }
+    .mcm-quote-author { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.45); margin-top: 10px; text-align: center; }
+
+    /* Highlight bar */
+    .mcm-highlight { background: var(--gray-50); border-left: 3px solid var(--orange); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 16px; }
+    .mcm-highlight-blue { border-left-color: var(--blue-dark); }
+
+    /* Pilar */
+    .mcm-pilar { display: flex; gap: 18px; align-items: flex-start; padding: 18px 0; border-bottom: 1px solid var(--gray-200); }
+    .mcm-pilar-num { font-family: var(--serif); font-size: 13px; font-weight: 700; color: var(--orange); min-width: 28px; padding-top: 2px; }
+    .mcm-pilar-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+    .mcm-pilar-desc { font-size: 12.5px; color: var(--gray-600); font-weight: 300; line-height: 1.6; }
+
+    /* Evento item */
+    .mcm-evento { display: grid; grid-template-columns: 72px 1fr auto; gap: 20px; align-items: center; padding: 18px 12px; border-bottom: 1px solid var(--gray-200); border-radius: var(--radius-md); transition: background .15s; }
+    .mcm-evento:hover { background: var(--gray-50); }
+    .mcm-evento-date { text-align: center; background: var(--black); border-radius: var(--radius-sm); padding: 9px 6px; }
+    .mcm-evento-day { font-family: var(--serif); font-size: 22px; color: var(--white); display: block; line-height: 1; }
+    .mcm-evento-month { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.6); display: block; margin-top: 2px; }
+    .mcm-evento-tipo { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
+    .mcm-evento-name { font-family: var(--serif); font-size: 16px; font-weight: 400; line-height: 1.2; margin-bottom: 3px; }
+    .mcm-evento-local { font-size: 11.5px; color: var(--gray-500); }
+    .mcm-badge-event { font-size: 11px; font-weight: 700; padding: 5px 14px; border-radius: var(--radius-full); background: rgba(22,163,74,.1); color: var(--success); white-space: nowrap; }
+
+    /* Topic card */
+    .mcm-topic { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 18px; transition: border-color .2s, box-shadow .2s; }
+    .mcm-topic:hover { border-color: var(--blue-dark); box-shadow: 0 6px 20px var(--blue-10); }
+    .mcm-topic-dot { width: 8px; height: 8px; background: var(--orange); border-radius: 50%; margin-bottom: 10px; }
+    .mcm-topic-label { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+    .mcm-topic-sub { font-size: 12px; color: var(--gray-600); font-weight: 300; line-height: 1.5; }
+
+    /* Contact form field */
+    .mcm-field { display: flex; flex-direction: column; gap: 6px; }
+    .mcm-field-label { font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--gray-700); }
+
+    /* Responsive */
+    @media (max-width: 860px) { .ds-nav { display: none; } .ds-main { padding: 32px 24px; max-width: 100%; } }
+  </style>
+</head>
+<body>
+<div class="ds-page">
+
+  <!-- NAV -->
+  <nav class="ds-nav">
+    <div class="ds-nav-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 243 63.53" height="22" fill="#ffffff">
+        <g><path d="M102.29,16.02c-.71,0-1-.36-1.28-1.28-2.07-6.62-5.27-11.54-10.97-11.54-9.54,0-15.74,11.25-15.74,28.56s6.48,28.56,16.45,28.56c5.91,0,8.26-5.34,10.89-13.18.36-1.07.64-1.49,1.28-1.49.78,0,1.07.43,1.07,1.42,0,1.71-.14,3.28-.14,6.27l.14,4.91c0,2.64-5.7,5.27-13.25,5.27-16.02,0-26.42-12.53-26.42-31.76S74.44,0,90.04,0c7.69,0,13.25,2.64,13.25,5.27l-.14,3.99.14,5.48c0,1-.36,1.28-1,1.28Z"/><path d="M146.9,14.74c-3.49,12.46-8.12,28.49-11.89,39.24-.5,1.42-1.28,1.99-2.71,1.99-1.5,0-2.35-.57-2.85-1.99-4.2-11.96-8.76-26.71-12.61-39.17-.28-1.07-.43-.93-.43.07l-.85,40.31c-.07,3.7,2.78,4.27,5.77,4.84.93.14,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-3.92-.43-6.98-.43-2.42,0-6.27.43-7.05.43-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,2.07-.43,4.42-1.14,4.49-4.84l1-47.5c.07-2.35-1.07-3.28-4.2-3.92-.93-.21-1.42-.64-1.42-1.42s.5-1.21,1.21-1.21c.86,0,2.85.14,6.91.14,2.14,0,3.7-.14,4.7-.14,1.57,0,2.92.71,3.56,2.85l11.04,37.39c.29.85.5.78.71,0l10.75-37.75c.64-2.28,1.14-2.49,2.56-2.49.5,0,3.13.14,5.7.14,3.85,0,5.98-.14,6.84-.14,1,0,1.35.64,1.35,1.14,0,.57-.21,1.07-1.21,1.28-2.56.57-4.77,1.35-4.7,4.13l.93,47.5c.07,3.7,2.28,4.27,4.49,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.98-.43-9.04-.43s-8.26.43-9.04.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,2.07-.5,4.56-1.14,4.49-4.84l-.78-40.45c0-1.14-.14-1-.43,0h-.03Z"/><path d="M165.02,31.83c0-19.3,9.47-31.83,24-31.83s23.93,12.53,23.93,31.83-9.4,31.69-23.93,31.69-24-12.46-24-31.69h0ZM202.98,31.83c0-17.09-5.48-28.63-13.96-28.63s-14.03,11.54-14.03,28.63,5.56,28.49,14.03,28.49,13.96-11.47,13.96-28.49Z"/></g>
+        <g><path d="M2.58,14.78c-.78-.21-1-.64-1-1.21,0-.5.14-1,1.07-1.14,2.78-.43,7.19-1.64,9.12-3.56.43-.43.57-.5.93-.5.57,0,.78.21.78.71v4.63c0,.64.21.64.57.21,2.85-3.49,6.69-5.7,10.82-5.7,5.41,0,9.26,2.56,11.04,7.19.14.36.28.36.5.07,2.85-4.34,6.84-7.26,11.61-7.26,7.62,0,12.46,5.06,12.46,13.67v26.21c0,3.7,2.21,4.49,3.77,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.27-.43-7.98-.43s-7.19.43-7.98.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-26.21c0-5.55-2.56-8.47-6.62-8.47-4.42,0-8.33,3.99-8.33,9.47v25.21c0,3.7,2.21,4.49,3.77,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.27-.43-7.98-.43s-7.19.43-7.98.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-26.21c0-5.55-2.28-8.47-6.84-8.47-3.99,0-8.12,2.92-8.12,7.69v26.99c0,3.7,2.21,4.49,3.77,4.84.92.21,1.14.64,1.14,1.21,0,.5-.29,1.14-1.21,1.14-.78,0-4.27-.43-8.05-.43s-7.12.43-7.9.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-30.34c0-1.99-.78-2.56-2.35-2.99h.03Z"/><path d="M217.01,52.02c0-1.07.14-2.35.14-4.63,0-2.14-.14-3.56-.14-4.63,0-1.14.57-1.5,1.14-1.5.64,0,1,.43,1.28,1.21,2.06,5.7,4.84,10.18,9.9,10.18,4.06,0,6.62-2.49,6.62-6.69,0-12.82-19.02-11.18-19.02-25.21,0-8.69,5.7-13.1,13.89-13.1,5.55,0,9.47,1.21,9.47,3.42,0,.78-.14,2.28-.14,3.92s.14,2.71.14,3.56c0,.64-.28,1.07-.92,1.07s-.93-.43-1.28-1.21c-2.28-4.98-5.27-7.62-8.83-7.62s-5.48,2.35-5.48,5.91c0,10.19,19.23,9.19,19.23,25.64,0,8.62-6.27,13.53-14.81,13.53-6.27,0-11.18-1.64-11.18-3.85h0Z"/></g>
+      </svg>
+      <div style="font-size:9px;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase;margin-top:6px;">Design System v1.0</div>
+    </div>
+
+    <div class="ds-nav-title">Brand System</div>
+    <a href="#marca">Marca & Logo</a>
+    <a href="#posicionamento">Posicionamento</a>
+    <a href="#personalidade">Personalidade</a>
+
+    <div class="ds-nav-title">Fundação</div>
+    <a href="#tokens">Tokens</a>
+    <a href="#cores">Cores</a>
+    <a href="#tipografia">Tipografia</a>
+    <a href="#espacamento">Espaçamento</a>
+
+    <div class="ds-nav-title">Componentes</div>
+    <a href="#botoes">Botões</a>
+    <a href="#badges">Badges & Labels</a>
+    <a href="#cards">Cards</a>
+    <a href="#inputs">Inputs</a>
+    <a href="#avatares">Avatares</a>
+    <a href="#ticker">Ticker</a>
+
+    <div class="ds-nav-title">Padrões</div>
+    <a href="#editorial">Editorial</a>
+    <a href="#eventos">Eventos</a>
+    <a href="#newsletter">Newsletter</a>
+    <a href="#iconografia">Iconografia</a>
+
+    <div class="ds-nav-title">Princípios</div>
+    <a href="#voz">Voz & Tom</a>
+    <a href="#acessibilidade">Acessibilidade</a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="ds-main">
+
+    <!-- INTRO -->
+    <div style="margin-bottom:56px;">
+      <div class="mcm-eyebrow" style="margin-bottom:16px;">Design System</div>
+      <h1 style="font-family:var(--serif);font-size:44px;font-weight:400;letter-spacing:-.02em;line-height:1.0;margin-bottom:12px;">mCMOs<br><em style="font-style:italic;color:var(--orange);">Design System</em></h1>
+      <p style="font-size:15px;color:var(--gray-600);font-weight:300;line-height:1.7;max-width:540px;">Guia completo de tokens, componentes e padrões visuais para o ecossistema mCMOs — portal, newsletter, eventos e comunidade. Versão 1.0 · Maio 2026.</p>
+    </div>
+
+    <!-- ════ MARCA & LOGO ════ -->
+    <section class="ds-section" id="marca">
+      <h2 class="ds-section-title">Marca & Logo</h2>
+      <p class="ds-section-desc">O logotipo mCMOs é uma composição tipográfica em Noto Serif — sem ícone separado, sem slogan obrigatório. A força está na tipografia e no peso editorial da marca.</p>
+
+      <!-- Logo sobre fundos -->
+      <div class="ds-label" style="margin-bottom:16px;">Versões do logo</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;">
+
+        <div style="background:var(--black);border-radius:var(--radius-md);padding:40px 36px;display:flex;flex-direction:column;gap:32px;">
+          <div>
+            <div style="font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:16px;">Principal — fundo escuro</div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 243 63.53" height="32" fill="#ffffff">
+              <g><path d="M102.29,16.02c-.71,0-1-.36-1.28-1.28-2.07-6.62-5.27-11.54-10.97-11.54-9.54,0-15.74,11.25-15.74,28.56s6.48,28.56,16.45,28.56c5.91,0,8.26-5.34,10.89-13.18.36-1.07.64-1.49,1.28-1.49.78,0,1.07.43,1.07,1.42,0,1.71-.14,3.28-.14,6.27l.14,4.91c0,2.64-5.7,5.27-13.25,5.27-16.02,0-26.42-12.53-26.42-31.76S74.44,0,90.04,0c7.69,0,13.25,2.64,13.25,5.27l-.14,3.99.14,5.48c0,1-.36,1.28-1,1.28Z"/><path d="M146.9,14.74c-3.49,12.46-8.12,28.49-11.89,39.24-.5,1.42-1.28,1.99-2.71,1.99-1.5,0-2.35-.57-2.85-1.99-4.2-11.96-8.76-26.71-12.61-39.17-.28-1.07-.43-.93-.43.07l-.85,40.31c-.07,3.7,2.78,4.27,5.77,4.84.93.14,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-3.92-.43-6.98-.43-2.42,0-6.27.43-7.05.43-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,2.07-.43,4.42-1.14,4.49-4.84l1-47.5c.07-2.35-1.07-3.28-4.2-3.92-.93-.21-1.42-.64-1.42-1.42s.5-1.21,1.21-1.21c.86,0,2.85.14,6.91.14,2.14,0,3.7-.14,4.7-.14,1.57,0,2.92.71,3.56,2.85l11.04,37.39c.29.85.5.78.71,0l10.75-37.75c.64-2.28,1.14-2.49,2.56-2.49.5,0,3.13.14,5.7.14,3.85,0,5.98-.14,6.84-.14,1,0,1.35.64,1.35,1.14,0,.57-.21,1.07-1.21,1.28-2.56.57-4.77,1.35-4.7,4.13l.93,47.5c.07,3.7,2.28,4.27,4.49,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.98-.43-9.04-.43s-8.26.43-9.04.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,2.07-.5,4.56-1.14,4.49-4.84l-.78-40.45c0-1.14-.14-1-.43,0h-.03Z"/><path d="M165.02,31.83c0-19.3,9.47-31.83,24-31.83s23.93,12.53,23.93,31.83-9.4,31.69-23.93,31.69-24-12.46-24-31.69h0ZM202.98,31.83c0-17.09-5.48-28.63-13.96-28.63s-14.03,11.54-14.03,28.63,5.56,28.49,14.03,28.49,13.96-11.47,13.96-28.49Z"/></g>
+              <g><path d="M2.58,14.78c-.78-.21-1-.64-1-1.21,0-.5.14-1,1.07-1.14,2.78-.43,7.19-1.64,9.12-3.56.43-.43.57-.5.93-.5.57,0,.78.21.78.71v4.63c0,.64.21.64.57.21,2.85-3.49,6.69-5.7,10.82-5.7,5.41,0,9.26,2.56,11.04,7.19.14.36.28.36.5.07,2.85-4.34,6.84-7.26,11.61-7.26,7.62,0,12.46,5.06,12.46,13.67v26.21c0,3.7,2.21,4.49,3.77,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.27-.43-7.98-.43s-7.19.43-7.98.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-26.21c0-5.55-2.56-8.47-6.62-8.47-4.42,0-8.33,3.99-8.33,9.47v25.21c0,3.7,2.21,4.49,3.77,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.27-.43-7.98-.43s-7.19.43-7.98.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-26.21c0-5.55-2.28-8.47-6.84-8.47-3.99,0-8.12,2.92-8.12,7.69v26.99c0,3.7,2.21,4.49,3.77,4.84.92.21,1.14.64,1.14,1.21,0,.5-.29,1.14-1.21,1.14-.78,0-4.27-.43-8.05-.43s-7.12.43-7.9.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-30.34c0-1.99-.78-2.56-2.35-2.99h.03Z"/><path d="M217.01,52.02c0-1.07.14-2.35.14-4.63,0-2.14-.14-3.56-.14-4.63,0-1.14.57-1.5,1.14-1.5.64,0,1,.43,1.28,1.21,2.06,5.7,4.84,10.18,9.9,10.18,4.06,0,6.62-2.49,6.62-6.69,0-12.82-19.02-11.18-19.02-25.21,0-8.69,5.7-13.1,13.89-13.1,5.55,0,9.47,1.21,9.47,3.42,0,.78-.14,2.28-.14,3.92s.14,2.71.14,3.56c0,.64-.28,1.07-.92,1.07s-.93-.43-1.28-1.21c-2.28-4.98-5.27-7.62-8.83-7.62s-5.48,2.35-5.48,5.91c0,10.19,19.23,9.19,19.23,25.64,0,8.62-6.27,13.53-14.81,13.53-6.27,0-11.18-1.64-11.18-3.85h0Z"/></g>
+            </svg>
+          </div>
+          <div>
+            <div style="font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:16px;">Com tagline</div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 243 63.53" height="24" fill="#ffffff">
+              <g><path d="M102.29,16.02c-.71,0-1-.36-1.28-1.28-2.07-6.62-5.27-11.54-10.97-11.54-9.54,0-15.74,11.25-15.74,28.56s6.48,28.56,16.45,28.56c5.91,0,8.26-5.34,10.89-13.18.36-1.07.64-1.49,1.28-1.49.78,0,1.07.43,1.07,1.42,0,1.71-.14,3.28-.14,6.27l.14,4.91c0,2.64-5.7,5.27-13.25,5.27-16.02,0-26.42-12.53-26.42-31.76S74.44,0,90.04,0c7.69,0,13.25,2.64,13.25,5.27l-.14,3.99.14,5.48c0,1-.36,1.28-1,1.28Z"/><path d="M146.9,14.74c-3.49,12.46-8.12,28.49-11.89,39.24-.5,1.42-1.28,1.99-2.71,1.99-1.5,0-2.35-.57-2.85-1.99-4.2-11.96-8.76-26.71-12.61-39.17-.28-1.07-.43-.93-.43.07l-.85,40.31c-.07,3.7,2.78,4.27,5.77,4.84.93.14,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-3.92-.43-6.98-.43-2.42,0-6.27.43-7.05.43-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,2.07-.43,4.42-1.14,4.49-4.84l1-47.5c.07-2.35-1.07-3.28-4.2-3.92-.93-.21-1.42-.64-1.42-1.42s.5-1.21,1.21-1.21c.86,0,2.85.14,6.91.14,2.14,0,3.7-.14,4.7-.14,1.57,0,2.92.71,3.56,2.85l11.04,37.39c.29.85.5.78.71,0l10.75-37.75c.64-2.28,1.14-2.49,2.56-2.49.5,0,3.13.14,5.7.14,3.85,0,5.98-.14,6.84-.14,1,0,1.35.64,1.35,1.14,0,.57-.21,1.07-1.21,1.28-2.56.57-4.77,1.35-4.7,4.13l.93,47.5c.07,3.7,2.28,4.27,4.49,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.98-.43-9.04-.43s-8.26.43-9.04.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,2.07-.5,4.56-1.14,4.49-4.84l-.78-40.45c0-1.14-.14-1-.43,0h-.03Z"/><path d="M165.02,31.83c0-19.3,9.47-31.83,24-31.83s23.93,12.53,23.93,31.83-9.4,31.69-23.93,31.69-24-12.46-24-31.69h0ZM202.98,31.83c0-17.09-5.48-28.63-13.96-28.63s-14.03,11.54-14.03,28.63,5.56,28.49,14.03,28.49,13.96-11.47,13.96-28.49Z"/></g>
+              <g><path d="M2.58,14.78c-.78-.21-1-.64-1-1.21,0-.5.14-1,1.07-1.14,2.78-.43,7.19-1.64,9.12-3.56.43-.43.57-.5.93-.5.57,0,.78.21.78.71v4.63c0,.64.21.64.57.21,2.85-3.49,6.69-5.7,10.82-5.7,5.41,0,9.26,2.56,11.04,7.19.14.36.28.36.5.07,2.85-4.34,6.84-7.26,11.61-7.26,7.62,0,12.46,5.06,12.46,13.67v26.21c0,3.7,2.21,4.49,3.77,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.27-.43-7.98-.43s-7.19.43-7.98.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-26.21c0-5.55-2.56-8.47-6.62-8.47-4.42,0-8.33,3.99-8.33,9.47v25.21c0,3.7,2.21,4.49,3.77,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.27-.43-7.98-.43s-7.19.43-7.98.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-26.21c0-5.55-2.28-8.47-6.84-8.47-3.99,0-8.12,2.92-8.12,7.69v26.99c0,3.7,2.21,4.49,3.77,4.84.92.21,1.14.64,1.14,1.21,0,.5-.29,1.14-1.21,1.14-.78,0-4.27-.43-8.05-.43s-7.12.43-7.9.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-30.34c0-1.99-.78-2.56-2.35-2.99h.03Z"/><path d="M217.01,52.02c0-1.07.14-2.35.14-4.63,0-2.14-.14-3.56-.14-4.63,0-1.14.57-1.5,1.14-1.5.64,0,1,.43,1.28,1.21,2.06,5.7,4.84,10.18,9.9,10.18,4.06,0,6.62-2.49,6.62-6.69,0-12.82-19.02-11.18-19.02-25.21,0-8.69,5.7-13.1,13.89-13.1,5.55,0,9.47,1.21,9.47,3.42,0,.78-.14,2.28-.14,3.92s.14,2.71.14,3.56c0,.64-.28,1.07-.92,1.07s-.93-.43-1.28-1.21c-2.28-4.98-5.27-7.62-8.83-7.62s-5.48,2.35-5.48,5.91c0,10.19,19.23,9.19,19.23,25.64,0,8.62-6.27,13.53-14.81,13.53-6.27,0-11.18-1.64-11.18-3.85h0Z"/></g>
+            </svg>
+            <div style="font-size:11px;font-weight:300;color:rgba(255,255,255,.35);margin-top:8px;letter-spacing:.06em;">Executive women's leadership community</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:32px 28px;flex:1;display:flex;flex-direction:column;gap:20px;">
+            <div>
+              <div style="font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:14px;">Versão escura — fundo branco</div>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 243 63.53" height="28" fill="#0d0d0d">
+                <g><path d="M102.29,16.02c-.71,0-1-.36-1.28-1.28-2.07-6.62-5.27-11.54-10.97-11.54-9.54,0-15.74,11.25-15.74,28.56s6.48,28.56,16.45,28.56c5.91,0,8.26-5.34,10.89-13.18.36-1.07.64-1.49,1.28-1.49.78,0,1.07.43,1.07,1.42,0,1.71-.14,3.28-.14,6.27l.14,4.91c0,2.64-5.7,5.27-13.25,5.27-16.02,0-26.42-12.53-26.42-31.76S74.44,0,90.04,0c7.69,0,13.25,2.64,13.25,5.27l-.14,3.99.14,5.48c0,1-.36,1.28-1,1.28Z"/><path d="M146.9,14.74c-3.49,12.46-8.12,28.49-11.89,39.24-.5,1.42-1.28,1.99-2.71,1.99-1.5,0-2.35-.57-2.85-1.99-4.2-11.96-8.76-26.71-12.61-39.17-.28-1.07-.43-.93-.43.07l-.85,40.31c-.07,3.7,2.78,4.27,5.77,4.84.93.14,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-3.92-.43-6.98-.43-2.42,0-6.27.43-7.05.43-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,2.07-.43,4.42-1.14,4.49-4.84l1-47.5c.07-2.35-1.07-3.28-4.2-3.92-.93-.21-1.42-.64-1.42-1.42s.5-1.21,1.21-1.21c.86,0,2.85.14,6.91.14,2.14,0,3.7-.14,4.7-.14,1.57,0,2.92.71,3.56,2.85l11.04,37.39c.29.85.5.78.71,0l10.75-37.75c.64-2.28,1.14-2.49,2.56-2.49.5,0,3.13.14,5.7.14,3.85,0,5.98-.14,6.84-.14,1,0,1.35.64,1.35,1.14,0,.57-.21,1.07-1.21,1.28-2.56.57-4.77,1.35-4.7,4.13l.93,47.5c.07,3.7,2.28,4.27,4.49,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.98-.43-9.04-.43s-8.26.43-9.04.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,2.07-.5,4.56-1.14,4.49-4.84l-.78-40.45c0-1.14-.14-1-.43,0h-.03Z"/><path d="M165.02,31.83c0-19.3,9.47-31.83,24-31.83s23.93,12.53,23.93,31.83-9.4,31.69-23.93,31.69-24-12.46-24-31.69h0ZM202.98,31.83c0-17.09-5.48-28.63-13.96-28.63s-14.03,11.54-14.03,28.63,5.56,28.49,14.03,28.49,13.96-11.47,13.96-28.49Z"/></g>
+                <g><path d="M2.58,14.78c-.78-.21-1-.64-1-1.21,0-.5.14-1,1.07-1.14,2.78-.43,7.19-1.64,9.12-3.56.43-.43.57-.5.93-.5.57,0,.78.21.78.71v4.63c0,.64.21.64.57.21,2.85-3.49,6.69-5.7,10.82-5.7,5.41,0,9.26,2.56,11.04,7.19.14.36.28.36.5.07,2.85-4.34,6.84-7.26,11.61-7.26,7.62,0,12.46,5.06,12.46,13.67v26.21c0,3.7,2.21,4.49,3.77,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.27-.43-7.98-.43s-7.19.43-7.98.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-26.21c0-5.55-2.56-8.47-6.62-8.47-4.42,0-8.33,3.99-8.33,9.47v25.21c0,3.7,2.21,4.49,3.77,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.27-.43-7.98-.43s-7.19.43-7.98.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-26.21c0-5.55-2.28-8.47-6.84-8.47-3.99,0-8.12,2.92-8.12,7.69v26.99c0,3.7,2.21,4.49,3.77,4.84.92.21,1.14.64,1.14,1.21,0,.5-.29,1.14-1.21,1.14-.78,0-4.27-.43-8.05-.43s-7.12.43-7.9.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-30.34c0-1.99-.78-2.56-2.35-2.99h.03Z"/><path d="M217.01,52.02c0-1.07.14-2.35.14-4.63,0-2.14-.14-3.56-.14-4.63,0-1.14.57-1.5,1.14-1.5.64,0,1,.43,1.28,1.21,2.06,5.7,4.84,10.18,9.9,10.18,4.06,0,6.62-2.49,6.62-6.69,0-12.82-19.02-11.18-19.02-25.21,0-8.69,5.7-13.1,13.89-13.1,5.55,0,9.47,1.21,9.47,3.42,0,.78-.14,2.28-.14,3.92s.14,2.71.14,3.56c0,.64-.28,1.07-.92,1.07s-.93-.43-1.28-1.21c-2.28-4.98-5.27-7.62-8.83-7.62s-5.48,2.35-5.48,5.91c0,10.19,19.23,9.19,19.23,25.64,0,8.62-6.27,13.53-14.81,13.53-6.27,0-11.18-1.64-11.18-3.85h0Z"/></g>
+              </svg>
+            </div>
+            <div>
+              <div style="font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-400);margin-bottom:14px;">Versão laranja — contexto de destaque</div>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 243 63.53" height="28" fill="#e8843a">
+                <g><path d="M102.29,16.02c-.71,0-1-.36-1.28-1.28-2.07-6.62-5.27-11.54-10.97-11.54-9.54,0-15.74,11.25-15.74,28.56s6.48,28.56,16.45,28.56c5.91,0,8.26-5.34,10.89-13.18.36-1.07.64-1.49,1.28-1.49.78,0,1.07.43,1.07,1.42,0,1.71-.14,3.28-.14,6.27l.14,4.91c0,2.64-5.7,5.27-13.25,5.27-16.02,0-26.42-12.53-26.42-31.76S74.44,0,90.04,0c7.69,0,13.25,2.64,13.25,5.27l-.14,3.99.14,5.48c0,1-.36,1.28-1,1.28Z"/><path d="M146.9,14.74c-3.49,12.46-8.12,28.49-11.89,39.24-.5,1.42-1.28,1.99-2.71,1.99-1.5,0-2.35-.57-2.85-1.99-4.2-11.96-8.76-26.71-12.61-39.17-.28-1.07-.43-.93-.43.07l-.85,40.31c-.07,3.7,2.78,4.27,5.77,4.84.93.14,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-3.92-.43-6.98-.43-2.42,0-6.27.43-7.05.43-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,2.07-.43,4.42-1.14,4.49-4.84l1-47.5c.07-2.35-1.07-3.28-4.2-3.92-.93-.21-1.42-.64-1.42-1.42s.5-1.21,1.21-1.21c.86,0,2.85.14,6.91.14,2.14,0,3.7-.14,4.7-.14,1.57,0,2.92.71,3.56,2.85l11.04,37.39c.29.85.5.78.71,0l10.75-37.75c.64-2.28,1.14-2.49,2.56-2.49.5,0,3.13.14,5.7.14,3.85,0,5.98-.14,6.84-.14,1,0,1.35.64,1.35,1.14,0,.57-.21,1.07-1.21,1.28-2.56.57-4.77,1.35-4.7,4.13l.93,47.5c.07,3.7,2.28,4.27,4.49,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.98-.43-9.04-.43s-8.26.43-9.04.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,2.07-.5,4.56-1.14,4.49-4.84l-.78-40.45c0-1.14-.14-1-.43,0h-.03Z"/><path d="M165.02,31.83c0-19.3,9.47-31.83,24-31.83s23.93,12.53,23.93,31.83-9.4,31.69-23.93,31.69-24-12.46-24-31.69h0ZM202.98,31.83c0-17.09-5.48-28.63-13.96-28.63s-14.03,11.54-14.03,28.63,5.56,28.49,14.03,28.49,13.96-11.47,13.96-28.49Z"/></g>
+                <g><path d="M2.58,14.78c-.78-.21-1-.64-1-1.21,0-.5.14-1,1.07-1.14,2.78-.43,7.19-1.64,9.12-3.56.43-.43.57-.5.93-.5.57,0,.78.21.78.71v4.63c0,.64.21.64.57.21,2.85-3.49,6.69-5.7,10.82-5.7,5.41,0,9.26,2.56,11.04,7.19.14.36.28.36.5.07,2.85-4.34,6.84-7.26,11.61-7.26,7.62,0,12.46,5.06,12.46,13.67v26.21c0,3.7,2.21,4.49,3.77,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.27-.43-7.98-.43s-7.19.43-7.98.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-26.21c0-5.55-2.56-8.47-6.62-8.47-4.42,0-8.33,3.99-8.33,9.47v25.21c0,3.7,2.21,4.49,3.77,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.27-.43-7.98-.43s-7.19.43-7.98.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-26.21c0-5.55-2.28-8.47-6.84-8.47-3.99,0-8.12,2.92-8.12,7.69v26.99c0,3.7,2.21,4.49,3.77,4.84.92.21,1.14.64,1.14,1.21,0,.5-.29,1.14-1.21,1.14-.78,0-4.27-.43-8.05-.43s-7.12.43-7.9.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-30.34c0-1.99-.78-2.56-2.35-2.99h.03Z"/><path d="M217.01,52.02c0-1.07.14-2.35.14-4.63,0-2.14-.14-3.56-.14-4.63,0-1.14.57-1.5,1.14-1.5.64,0,1,.43,1.28,1.21,2.06,5.7,4.84,10.18,9.9,10.18,4.06,0,6.62-2.49,6.62-6.69,0-12.82-19.02-11.18-19.02-25.21,0-8.69,5.7-13.1,13.89-13.1,5.55,0,9.47,1.21,9.47,3.42,0,.78-.14,2.28-.14,3.92s.14,2.71.14,3.56c0,.64-.28,1.07-.92,1.07s-.93-.43-1.28-1.21c-2.28-4.98-5.27-7.62-8.83-7.62s-5.48,2.35-5.48,5.91c0,10.19,19.23,9.19,19.23,25.64,0,8.62-6.27,13.53-14.81,13.53-6.27,0-11.18-1.64-11.18-3.85h0Z"/></g>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Usos proibidos -->
+      <div class="ds-label" style="margin-bottom:12px;">O que não fazer</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:32px;">
+        <div style="border:1px dashed var(--gray-200);border-radius:var(--radius-md);padding:16px;text-align:center;position:relative;">
+          <div style="font-size:32px;font-weight:900;letter-spacing:-.03em;color:var(--gray-200);">mCMOs</div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+            <div style="width:100%;height:2px;background:var(--error);transform:rotate(-10deg);opacity:.7;"></div>
+          </div>
+          <div style="font-size:9px;color:var(--error);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:6px;">Bold demais</div>
+        </div>
+        <div style="border:1px dashed var(--gray-200);border-radius:var(--radius-md);padding:16px;text-align:center;position:relative;">
+          <div style="font-size:18px;font-style:italic;color:var(--gray-300);font-family:var(--serif);">mCMOs</div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+            <div style="width:100%;height:2px;background:var(--error);transform:rotate(-10deg);opacity:.7;"></div>
+          </div>
+          <div style="font-size:9px;color:var(--error);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:6px;">Só itálico</div>
+        </div>
+        <div style="border:1px dashed var(--gray-200);border-radius:var(--radius-md);padding:16px;text-align:center;position:relative;">
+          <div style="font-size:22px;color:var(--gray-300);font-family:var(--serif);background:linear-gradient(135deg,#e8843a,#1a4fba);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">mCMOs</div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+            <div style="width:100%;height:2px;background:var(--error);transform:rotate(-10deg);opacity:.7;"></div>
+          </div>
+          <div style="font-size:9px;color:var(--error);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:6px;">Gradiente</div>
+        </div>
+        <div style="border:1px dashed var(--gray-200);border-radius:var(--radius-md);padding:16px;text-align:center;position:relative;">
+          <div style="font-size:22px;color:var(--gray-200);font-family:var(--serif);transform:skewX(-12deg);display:inline-block;">mCMOs</div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+            <div style="width:100%;height:2px;background:var(--error);transform:rotate(-10deg);opacity:.7;"></div>
+          </div>
+          <div style="font-size:9px;color:var(--error);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:6px;">Distorção</div>
+        </div>
+        <div style="border:1px dashed var(--gray-200);border-radius:var(--radius-md);padding:16px;text-align:center;position:relative;">
+          <div style="font-size:22px;color:#999;font-family:Arial,sans-serif;">mCMOs</div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+            <div style="width:100%;height:2px;background:var(--error);transform:rotate(-10deg);opacity:.7;"></div>
+          </div>
+          <div style="font-size:9px;color:var(--error);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:6px;">Fonte errada</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ POSICIONAMENTO ════ -->
+    <section class="ds-section" id="posicionamento">
+      <h2 class="ds-section-title">Posicionamento</h2>
+      <p class="ds-section-desc">O que o mCMOs é, para quem é, e como se diferencia. A base de toda comunicação da marca.</p>
+
+      <!-- Essência -->
+      <div style="background:var(--black);border-radius:var(--radius-md);padding:36px;margin-bottom:24px;">
+        <div class="ds-label" style="color:rgba(255,255,255,.3);border-color:var(--orange);margin-bottom:20px;">Essência da marca</div>
+        <div style="font-family:var(--serif);font-size:clamp(20px,2.5vw,28px);color:#fff;line-height:1.4;max-width:600px;">
+          "Onde mulheres da alta gestão de marketing se conectam a negócios, estratégia e novas tecnologias para <em style="color:var(--orange);">moldar decisões, acelerar resultados e influenciar mercados.</em>"
+        </div>
+      </div>
+
+      <!-- Proposta de valor -->
+      <div class="ds-label" style="margin-bottom:16px;">Proposta de valor</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;">
+        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:22px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">Para quem é</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:13px;color:var(--black);font-weight:500;">→ Chief Marketing Officers</div>
+            <div style="font-size:13px;color:var(--black);font-weight:500;">→ Diretoras de Marketing</div>
+            <div style="font-size:13px;color:var(--black);font-weight:500;">→ Vice-Presidentes de Marketing, Receitas ou Growth</div>
+            <div style="font-size:13px;color:var(--black);font-weight:500;">→ Chief Revenue Officers</div>
+            <div style="font-size:13px;color:var(--black);font-weight:500;">→ CEOs de empresas de Marketing</div>
+            <div style="font-size:13px;color:var(--black);font-weight:500;">→ Conselheiras & Superintendentes</div>
+          </div>
+        </div>
+        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:22px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">O que entrega</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:13px;color:var(--black);font-weight:500;">→ Conexões genuínas entre pares</div>
+            <div style="font-size:13px;color:var(--black);font-weight:500;">→ Informação exclusiva de alto valor</div>
+            <div style="font-size:13px;color:var(--black);font-weight:500;">→ Espaço seguro para trocas estratégicas</div>
+            <div style="font-size:13px;color:var(--black);font-weight:500;">→ Visibilidade e protagonismo feminino</div>
+            <div style="font-size:13px;color:var(--black);font-weight:500;">→ Acesso via indicação — comunidade de pares</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Razão de existir -->
+      <div class="ds-label" style="margin-bottom:16px;">Razão de existir</div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:28px;">
+        <div style="display:flex;gap:16px;align-items:flex-start;padding:16px 18px;background:var(--gray-50);border-radius:var(--radius-md);border-left:3px solid var(--orange);">
+          <div style="font-size:20px;flex-shrink:0;">👥</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:3px;">Falta de espaço para conversas de alto nível</div><div style="font-size:12.5px;color:var(--gray-600);font-weight:300;line-height:1.6;">Sentimos falta de um espaço propício para conversas mais profundas e que propicie trocas seguras entre pares.</div></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;padding:16px 18px;background:var(--gray-50);border-radius:var(--radius-md);border-left:3px solid var(--blue-dark);">
+          <div style="font-size:20px;flex-shrink:0;">⭐</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:3px;">Liderança técnica desconectada da visão de negócio</div><div style="font-size:12.5px;color:var(--gray-600);font-weight:300;line-height:1.6;">A liderança sobre IA, martech e estratégia segue concentrada em áreas dissociadas da visão de marca.</div></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;padding:16px 18px;background:var(--gray-50);border-radius:var(--radius-md);border-left:3px solid var(--orange);">
+          <div style="font-size:20px;flex-shrink:0;">🤝</div>
+          <div><div style="font-size:13px;font-weight:700;margin-bottom:3px;">Mulheres sub-representadas em espaços de decisão</div><div style="font-size:12.5px;color:var(--gray-600);font-weight:300;line-height:1.6;">Mulheres ainda ocupam menos assentos em conselhos, comitês consultivos e fóruns de influência estratégica.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ PERSONALIDADE ════ -->
+    <section class="ds-section" id="personalidade">
+      <h2 class="ds-section-title">Personalidade da marca</h2>
+      <p class="ds-section-desc">Como o mCMOs se comporta, como fala e como age em cada ponto de contato. A personalidade é a soma de atributos que tornam a marca reconhecível além do visual.</p>
+
+      <!-- Atributos -->
+      <div class="ds-label" style="margin-bottom:16px;">Atributos de marca</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px;">
+        <div style="background:var(--black);border-radius:var(--radius-md);padding:22px;">
+          <div style="font-family:var(--serif);font-size:22px;color:#fff;margin-bottom:6px;">Estratégica</div>
+          <div style="font-size:12.5px;color:rgba(255,255,255,.55);font-weight:300;line-height:1.6;">Fala sobre negócio, não só sobre marketing. Conecta marca, dados e receita.</div>
+        </div>
+        <div style="background:var(--blue-dark);border-radius:var(--radius-md);padding:22px;">
+          <div style="font-family:var(--serif);font-size:22px;color:#fff;margin-bottom:6px;">Editorial</div>
+          <div style="font-size:12.5px;color:rgba(255,255,255,.7);font-weight:300;line-height:1.6;">Tem ponto de vista. Não publica por volume — publica por relevância.</div>
+        </div>
+        <div style="background:var(--orange);border-radius:var(--radius-md);padding:22px;">
+          <div style="font-family:var(--serif);font-size:22px;color:#fff;margin-bottom:6px;">Exclusiva</div>
+          <div style="font-size:12.5px;color:rgba(255,255,255,.8);font-weight:300;line-height:1.6;">Acesso via indicação. Curadoria como valor, não como barreira.</div>
+        </div>
+        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:22px;">
+          <div style="font-family:var(--serif);font-size:22px;color:var(--black);margin-bottom:6px;">Humana</div>
+          <div style="font-size:12.5px;color:var(--gray-600);font-weight:300;line-height:1.6;">Calorosa sem ser informal. Próxima sem perder a seriedade editorial.</div>
+        </div>
+        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:22px;">
+          <div style="font-family:var(--serif);font-size:22px;color:var(--black);margin-bottom:6px;">Confiável</div>
+          <div style="font-size:12.5px;color:var(--gray-600);font-weight:300;line-height:1.6;">Dados reais, fontes verificadas, vozes autênticas. Sem clickbait.</div>
+        </div>
+        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:22px;">
+          <div style="font-family:var(--serif);font-size:22px;color:var(--black);margin-bottom:6px;">Protagonista</div>
+          <div style="font-size:12.5px;color:var(--gray-600);font-weight:300;line-height:1.6;">Amplifica vozes, não as substitui. Dá palco para quem faz.</div>
+        </div>
+      </div>
+
+      <!-- Taglines -->
+      <div class="ds-label" style="margin-bottom:16px;">Taglines & expressões de marca</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:28px;">
+        <div style="background:var(--black);border-radius:var(--radius-md);padding:18px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+          <div style="font-family:var(--serif);font-size:18px;color:#fff;font-style:italic;">"Executive women's leadership community"</div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.12);padding:4px 10px;border-radius:2px;">Tagline principal</div>
+        </div>
+        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:18px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+          <div style="font-family:var(--serif);font-size:18px;color:var(--black);font-style:italic;">"O briefing que o mercado lê"</div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-400);border:1px solid var(--gray-200);padding:4px 10px;border-radius:2px;">Newsletter</div>
+        </div>
+        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:18px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+          <div style="font-family:var(--serif);font-size:18px;color:var(--black);font-style:italic;">"A voz das mulheres que moldam o futuro do marketing"</div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-400);border:1px solid var(--gray-200);padding:4px 10px;border-radius:2px;">Portal</div>
+        </div>
+        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:18px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+          <div style="font-family:var(--serif);font-size:18px;color:var(--black);font-style:italic;">"Comunidade de pares — acesso via indicação"</div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-400);border:1px solid var(--gray-200);padding:4px 10px;border-radius:2px;">Comunidade</div>
+        </div>
+        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:18px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+          <div style="font-family:var(--serif);font-size:18px;color:var(--black);font-style:italic;">"I'm a woman in marketing"</div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-400);border:1px solid var(--gray-200);padding:4px 10px;border-radius:2px;">Merch & Brinde</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ CORES ════ -->
+    <section class="ds-section" id="cores">
+      <h2 class="ds-section-title">Cores</h2>
+      <p class="ds-section-desc">Paleta editorial baseada em três famílias: <strong>Neutros</strong> (preto/branco/cream), <strong>Laranja</strong> (ação e calor) e <strong>Azul</strong> (credibilidade e estratégia).</p>
+
+      <div class="ds-label">Cores de marca</div>
+      <div class="token-grid" style="margin-bottom:28px;">
+        <div class="token-item">
+          <div class="token-swatch" style="background:#0d0d0d;"></div>
+          <div class="token-info"><div class="token-name">--black</div><div class="token-value">#0d0d0d</div></div>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch" style="background:#e8843a;"></div>
+          <div class="token-info"><div class="token-name">--orange</div><div class="token-value">#e8843a</div></div>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch" style="background:#d4612a;"></div>
+          <div class="token-info"><div class="token-name">--orange-dark</div><div class="token-value">#d4612a</div></div>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch" style="background:#1a4fba;"></div>
+          <div class="token-info"><div class="token-name">--blue-dark</div><div class="token-value">#1a4fba</div></div>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch" style="background:#3a6fd8;"></div>
+          <div class="token-info"><div class="token-name">--blue-mid</div><div class="token-value">#3a6fd8</div></div>
+        </div>
+        <div class="token-item">
+          <div class="token-swatch" style="background:#f0ede8;border:1px solid #e0e0e0;"></div>
+          <div class="token-info"><div class="token-name">--cream</div><div class="token-value">#f0ede8</div></div>
+        </div>
+      </div>
+
+      <div class="ds-label">Escala de neutros</div>
+      <div class="token-grid" style="margin-bottom:28px;">
+        <div class="token-item"><div class="token-swatch" style="background:#1a1a1a;"></div><div class="token-info"><div class="token-name">--gray-900</div><div class="token-value">#1a1a1a</div></div></div>
+        <div class="token-item"><div class="token-swatch" style="background:#444;"></div><div class="token-info"><div class="token-name">--gray-700</div><div class="token-value">#444444</div></div></div>
+        <div class="token-item"><div class="token-swatch" style="background:#555;"></div><div class="token-info"><div class="token-name">--gray-600</div><div class="token-value">#555555</div></div></div>
+        <div class="token-item"><div class="token-swatch" style="background:#999;"></div><div class="token-info"><div class="token-name">--gray-400</div><div class="token-value">#999999</div></div></div>
+        <div class="token-item"><div class="token-swatch" style="background:#e0e0e0;"></div><div class="token-info"><div class="token-name">--gray-200</div><div class="token-value">#e0e0e0</div></div></div>
+        <div class="token-item"><div class="token-swatch" style="background:#f8f8f8;border:1px solid #e0e0e0;"></div><div class="token-info"><div class="token-name">--gray-50</div><div class="token-value">#f8f8f8</div></div></div>
+      </div>
+
+      <div class="ds-label">Cores semânticas</div>
+      <div class="token-grid">
+        <div class="token-item"><div class="token-swatch" style="background:#16a34a;"></div><div class="token-info"><div class="token-name">--success</div><div class="token-value">#16a34a</div></div></div>
+        <div class="token-item"><div class="token-swatch" style="background:#dc2626;"></div><div class="token-info"><div class="token-name">--error</div><div class="token-value">#dc2626</div></div></div>
+        <div class="token-item"><div class="token-swatch" style="background:#d97706;"></div><div class="token-info"><div class="token-name">--warning</div><div class="token-value">#d97706</div></div></div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ TIPOGRAFIA ════ -->
+    <section class="ds-section" id="tipografia">
+      <h2 class="ds-section-title">Tipografia</h2>
+      <p class="ds-section-desc">Duas famílias complementares: <strong>Noto Serif</strong> para títulos, citações e elementos editoriais — <strong>Noto Sans</strong> para corpo, UI e metadados.</p>
+
+      <div class="ds-label" style="margin-bottom:20px;">Noto Serif — editorial & display</div>
+      <div class="type-specimen" style="margin-bottom:32px;">
+        <div class="type-row">
+          <div class="type-meta">Display<br>68px / 400</div>
+          <div style="font-family:var(--serif);font-size:68px;font-weight:400;line-height:1;letter-spacing:-.025em;">Aa</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">H1<br>48px / 400</div>
+          <div style="font-family:var(--serif);font-size:48px;font-weight:400;line-height:1.0;letter-spacing:-.02em;">Líderes que moldam o futuro</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">H2<br>36px / 400</div>
+          <div style="font-family:var(--serif);font-size:36px;font-weight:400;line-height:1.1;letter-spacing:-.015em;">A nova agenda da CMO</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">H3<br>26px / 400</div>
+          <div style="font-family:var(--serif);font-size:26px;font-weight:400;line-height:1.15;">Marca volta a ser essencial</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">H4<br>20px / 400</div>
+          <div style="font-family:var(--serif);font-size:20px;font-weight:400;line-height:1.25;">Campanha isolada perde relevância</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">Italic<br>18px / 400</div>
+          <div style="font-family:var(--serif);font-size:18px;font-style:italic;color:var(--orange);">"A voz das mulheres que moldam o marketing"</div>
+        </div>
+      </div>
+
+      <div class="ds-label" style="margin-bottom:20px;">Noto Sans — UI & corpo</div>
+      <div class="type-specimen">
+        <div class="type-row">
+          <div class="type-meta">Body Large<br>16px / 300</div>
+          <div style="font-size:16px;font-weight:300;line-height:1.75;color:var(--gray-600);">O mCMOs é a principal plataforma dedicada ao protagonismo feminino no marketing brasileiro.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">Body<br>14px / 300</div>
+          <div style="font-size:14px;font-weight:300;line-height:1.7;color:var(--gray-600);">Publicamos análises estratégicas, pesquisas proprietárias e histórias das mulheres que estão redefinindo o marketing.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">Body Small<br>13px / 300</div>
+          <div style="font-size:13px;font-weight:300;line-height:1.65;color:var(--gray-600);">Análises, tendências e perspectivas das líderes de marketing mais influentes do Brasil.</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">Label<br>10px / 700<br>UPPERCASE</div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);">Ecossistema de líderes</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta">Caption<br>11px / 400</div>
+          <div style="font-size:11px;color:var(--gray-400);">Mai 2026 · 5 min de leitura</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ ESPAÇAMENTO ════ -->
+    <section class="ds-section" id="espacamento">
+      <h2 class="ds-section-title">Espaçamento</h2>
+      <p class="ds-section-desc">Escala baseada em múltiplos de 4px. Usado em padding, margin e gap de forma consistente.</p>
+      <div class="space-grid">
+        <div class="space-row"><div class="space-label">--space-1</div><div class="space-px">4px</div><div class="space-bar-wrap"><div class="space-bar" style="width:4px;"></div></div></div>
+        <div class="space-row"><div class="space-label">--space-2</div><div class="space-px">8px</div><div class="space-bar-wrap"><div class="space-bar" style="width:8px;"></div></div></div>
+        <div class="space-row"><div class="space-label">--space-3</div><div class="space-px">12px</div><div class="space-bar-wrap"><div class="space-bar" style="width:12px;"></div></div></div>
+        <div class="space-row"><div class="space-label">--space-4</div><div class="space-px">16px</div><div class="space-bar-wrap"><div class="space-bar" style="width:16px;"></div></div></div>
+        <div class="space-row"><div class="space-label">--space-6</div><div class="space-px">24px</div><div class="space-bar-wrap"><div class="space-bar" style="width:24px;"></div></div></div>
+        <div class="space-row"><div class="space-label">--space-8</div><div class="space-px">32px</div><div class="space-bar-wrap"><div class="space-bar" style="width:32px;"></div></div></div>
+        <div class="space-row"><div class="space-label">--space-10</div><div class="space-px">40px</div><div class="space-bar-wrap"><div class="space-bar" style="width:40px;"></div></div></div>
+        <div class="space-row"><div class="space-label">--space-12</div><div class="space-px">48px</div><div class="space-bar-wrap"><div class="space-bar" style="width:48px;"></div></div></div>
+        <div class="space-row"><div class="space-label">--space-16</div><div class="space-px">64px</div><div class="space-bar-wrap"><div class="space-bar" style="width:64px;"></div></div></div>
+        <div class="space-row"><div class="space-label">--space-20</div><div class="space-px">80px</div><div class="space-bar-wrap"><div class="space-bar" style="width:80px;"></div></div></div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ BOTÕES ════ -->
+    <section class="ds-section" id="botoes">
+      <h2 class="ds-section-title">Botões</h2>
+      <p class="ds-section-desc">Cinco variantes de botão, cada uma com um papel semântico claro. Três tamanhos: sm, default e lg.</p>
+
+      <div class="ds-label">Variantes</div>
+      <div class="comp-row" style="margin-bottom:24px;">
+        <button class="mcm-btn-primary">Fazer parte</button>
+        <button class="mcm-btn-orange">Assinar newsletter</button>
+        <button class="mcm-btn-dark">Enviar mensagem →</button>
+        <button class="mcm-btn-secondary">Ver ranking</button>
+        <button class="mcm-btn-ghost">Conhecer equipe</button>
+      </div>
+
+      <div class="ds-label">Tamanhos</div>
+      <div class="comp-row" style="margin-bottom:24px;">
+        <button class="mcm-btn-primary mcm-btn-sm">Small</button>
+        <button class="mcm-btn-primary">Default</button>
+        <button class="mcm-btn-primary mcm-btn-lg">Large</button>
+      </div>
+
+      <div class="ds-label">Em fundo escuro</div>
+      <div style="background:var(--black);padding:24px;border-radius:var(--radius-md);" class="comp-row">
+        <button class="mcm-btn-orange">Assinar →</button>
+        <button style="background:var(--white);color:var(--blue-dark);font-family:var(--sans);font-size:12px;font-weight:700;padding:10px 20px;border-radius:var(--radius-sm);border:none;cursor:pointer;">Fazer parte</button>
+        <button style="background:transparent;color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.3);font-family:var(--sans);font-size:12px;font-weight:500;padding:10px 20px;border-radius:var(--radius-sm);cursor:pointer;">Saiba mais</button>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ BADGES ════ -->
+    <section class="ds-section" id="badges">
+      <h2 class="ds-section-title">Badges & Labels</h2>
+      <p class="ds-section-desc">Elementos de categorização, status e destaque. Usados em cards, eventos e seções editoriais.</p>
+
+      <div class="ds-label">Badges de status</div>
+      <div class="comp-row" style="margin-bottom:20px;">
+        <span class="mcm-badge mcm-badge-orange">Em breve</span>
+        <span class="mcm-badge mcm-badge-blue">Novo · 2026</span>
+        <span class="mcm-badge mcm-badge-green">Inscrições abertas</span>
+        <span class="mcm-badge mcm-badge-dark">Only guests</span>
+      </div>
+
+      <div class="ds-label">Badge pill (contexto)</div>
+      <div class="comp-row" style="margin-bottom:20px;">
+        <span class="mcm-badge-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--orange);">Em breve</span>
+          <span style="width:1px;height:11px;background:var(--gray-200);"></span>
+          <span style="font-size:12px;color:var(--gray-600);">O portal</span>
+        </span>
+      </div>
+
+      <div class="ds-label">Eyebrow (label de seção)</div>
+      <div class="comp-row" style="margin-bottom:20px;">
+        <div class="mcm-eyebrow">Ecossistema de líderes</div>
+      </div>
+
+      <div class="ds-label">Section label</div>
+      <div style="max-width:400px;">
+        <div class="mcm-section-label">Linha editorial</div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ CARDS ════ -->
+    <section class="ds-section" id="cards">
+      <h2 class="ds-section-title">Cards</h2>
+      <p class="ds-section-desc">Dois padrões principais: card claro (fundo branco, para editorial) e card escuro (fundo preto, para seções de destaque).</p>
+
+      <div class="ds-label">Card editorial (claro)</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;">
+        <div class="mcm-card">
+          <div class="mcm-card-cover" style="background:linear-gradient(135deg,#0d1f3c,#1a4fba);"></div>
+          <div class="mcm-card-body">
+            <div class="mcm-card-cat">Liderança</div>
+            <div class="mcm-card-title">A CEO que chegou quando a família saiu</div>
+            <div class="mcm-card-desc">Gabriela Rizzo reinventa a Malwee após 60 anos de história familiar.</div>
+          </div>
+        </div>
+        <div class="mcm-card">
+          <div class="mcm-card-cover" style="background:linear-gradient(135deg,#e8843a,#d4612a);"></div>
+          <div class="mcm-card-body">
+            <div class="mcm-card-cat">Marketing</div>
+            <div class="mcm-card-title">Do marketing que executa à liderança estratégica</div>
+            <div class="mcm-card-desc">Como Beatriz Oliveira construiu espaço no topo da tecnologia.</div>
+          </div>
+        </div>
+        <div class="mcm-card">
+          <div class="mcm-card-cover" style="background:linear-gradient(135deg,#2d6a4f,#40916c);"></div>
+          <div class="mcm-card-body">
+            <div class="mcm-card-cat">Opinião</div>
+            <div class="mcm-card-title">Liderar é construir pessoas</div>
+            <div class="mcm-card-desc">O que aprendi com minhas filhas sobre gestão — por Talita Salles.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-label">Card escuro (dark)</div>
+      <div style="background:var(--black);padding:24px;border-radius:var(--radius-md);display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="mcm-card-dark">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">Ranking Anual</div>
+          <div style="font-family:var(--serif);font-size:18px;color:var(--white);line-height:1.25;margin-bottom:8px;">Top CMOs Brasil 2027</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.5);font-weight:300;line-height:1.6;">As 50 líderes mais influentes do marketing brasileiro.</div>
+        </div>
+        <div class="mcm-card-dark">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">Em breve</div>
+          <div style="font-family:var(--serif);font-size:18px;color:var(--white);line-height:1.25;margin-bottom:8px;">O portal mCMOs</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.5);font-weight:300;line-height:1.6;">Conteúdo estratégico, pesquisas e comunidade.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ INPUTS ════ -->
+    <section class="ds-section" id="inputs">
+      <h2 class="ds-section-title">Inputs & Forms</h2>
+      <p class="ds-section-desc">Campos de formulário para newsletter, contato e busca. Duas versões: fundo claro e fundo escuro.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+        <div>
+          <div class="ds-label">Fundo claro</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="mcm-field"><div class="mcm-field-label">Nome completo</div><input class="mcm-input" type="text" placeholder="Seu nome"></div>
+            <div class="mcm-field"><div class="mcm-field-label">E-mail</div><input class="mcm-input" type="email" placeholder="seu@email.com"></div>
+            <div class="mcm-field"><div class="mcm-field-label">Mensagem</div><textarea class="mcm-input" rows="3" placeholder="Sua mensagem" style="resize:none;"></textarea></div>
+            <button class="mcm-btn-dark">Enviar mensagem →</button>
+          </div>
+        </div>
+        <div style="background:var(--black);padding:24px;border-radius:var(--radius-md);">
+          <div class="ds-label" style="color:rgba(255,255,255,.3);">Fundo escuro</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <input class="mcm-input mcm-input-dark" type="text" placeholder="Seu nome completo">
+            <input class="mcm-input mcm-input-dark" type="email" placeholder="seu@email.com">
+            <button class="mcm-btn-orange" style="width:100%;justify-content:center;">Assinar newsletter →</button>
+            <div style="font-size:11px;color:rgba(255,255,255,.3);text-align:center;">Sem spam. Cancele quando quiser.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ AVATARES ════ -->
+    <section class="ds-section" id="avatares">
+      <h2 class="ds-section-title">Avatares</h2>
+      <p class="ds-section-desc">Usados em fundadoras, speakers e assinaturas de coluna. Quatro tamanhos. Iniciais em Noto Serif sobre gradiente de marca.</p>
+
+      <div class="comp-row" style="align-items:flex-end;gap:16px;margin-bottom:20px;">
+        <div>
+          <div class="ds-label" style="margin-bottom:6px;">XL · 100px</div>
+          <div class="mcm-avatar mcm-avatar-xl" style="background:linear-gradient(135deg,#1a4fba,#3a6fd8);">CB</div>
+        </div>
+        <div>
+          <div class="ds-label" style="margin-bottom:6px;">LG · 72px</div>
+          <div class="mcm-avatar mcm-avatar-lg" style="background:linear-gradient(135deg,#e8843a,#d4612a);">MF</div>
+        </div>
+        <div>
+          <div class="ds-label" style="margin-bottom:6px;">MD · 52px</div>
+          <div class="mcm-avatar mcm-avatar-md" style="background:linear-gradient(135deg,#1a1a1a,#3a3a3a);">TS</div>
+        </div>
+        <div>
+          <div class="ds-label" style="margin-bottom:6px;">SM · 36px</div>
+          <div class="mcm-avatar mcm-avatar-sm" style="background:linear-gradient(135deg,#1a4fba,#7ab0cc);">ME</div>
+        </div>
+      </div>
+
+      <div class="ds-label">Com assinatura (padrão de autoria)</div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="mcm-avatar mcm-avatar-md" style="background:linear-gradient(135deg,#e8843a,#d4612a);">MF</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;">Mirle Ferraz</div>
+          <div style="font-size:11px;color:var(--gray-400);font-weight:300;">CMO · mCMOs</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ TICKER ════ -->
+    <section class="ds-section" id="ticker">
+      <h2 class="ds-section-title">Ticker</h2>
+      <p class="ds-section-desc">Faixa animada de destaque. Fundo laranja, texto branco em caixa alta. Sempre em loop infinito. Pode pausar no hover.</p>
+
+      <div style="margin:0 -64px;overflow:hidden;">
+        <div class="mcm-ticker">
+          <div class="mcm-ticker-inner">
+            <span class="mcm-ticker-item">Comunidade <span class="mcm-ticker-sep">·</span> Networking executivo</span>
+            <span class="mcm-ticker-item">Eventos <span class="mcm-ticker-sep">·</span> Encontros exclusivos</span>
+            <span class="mcm-ticker-item">Conteúdo <span class="mcm-ticker-sep">·</span> Portal + newsletter</span>
+            <span class="mcm-ticker-item">Pesquisa <span class="mcm-ticker-sep">·</span> Estudos originais</span>
+            <span class="mcm-ticker-item">Comunidade <span class="mcm-ticker-sep">·</span> Networking executivo</span>
+            <span class="mcm-ticker-item">Eventos <span class="mcm-ticker-sep">·</span> Encontros exclusivos</span>
+            <span class="mcm-ticker-item">Conteúdo <span class="mcm-ticker-sep">·</span> Portal + newsletter</span>
+            <span class="mcm-ticker-item">Pesquisa <span class="mcm-ticker-sep">·</span> Estudos originais</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ EDITORIAL ════ -->
+    <section class="ds-section" id="editorial">
+      <h2 class="ds-section-title">Padrões editoriais</h2>
+      <p class="ds-section-desc">Componentes específicos do contexto editorial: pilares, highlights, quotes e topic cards.</p>
+
+      <div class="ds-label">Pilares (sobre / missão)</div>
+      <div style="max-width:520px;margin-bottom:28px;">
+        <div class="mcm-pilar"><div class="mcm-pilar-num">01</div><div><div class="mcm-pilar-title">Amplificar vozes femininas</div><p class="mcm-pilar-desc">Damos espaço para CMOs e fundadoras compartilharem visão estratégica e decisões de negócio.</p></div></div>
+        <div class="mcm-pilar"><div class="mcm-pilar-num">02</div><div><div class="mcm-pilar-title">Produzir conhecimento</div><p class="mcm-pilar-desc">Estudos, análises e dados de mercado sobre liderança feminina no marketing.</p></div></div>
+      </div>
+
+      <div class="ds-label">Highlight bar</div>
+      <div style="display:flex;flex-direction:column;gap:10px;max-width:500px;margin-bottom:28px;">
+        <div class="mcm-highlight">
+          <div style="font-size:13px;font-weight:300;color:var(--gray-600);line-height:1.6;">Campanha isolada perde relevância. Sistema de inteligência ganha.</div>
+        </div>
+        <div class="mcm-highlight mcm-highlight-blue">
+          <div style="font-size:13px;font-style:italic;color:var(--blue-dark);">"Liderança não é sobre se encaixar em um molde; é sobre gerar impacto sendo quem você é."</div>
+        </div>
+      </div>
+
+      <div class="ds-label">Topic cards (linha editorial)</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;">
+        <div class="mcm-topic"><div class="mcm-topic-dot"></div><div class="mcm-topic-label">Liderança</div><div class="mcm-topic-sub">Trajetória de CMOs que redefinem o marketing</div></div>
+        <div class="mcm-topic"><div class="mcm-topic-dot"></div><div class="mcm-topic-label">Estratégia</div><div class="mcm-topic-sub">Decisões que impactam negócios e mercados</div></div>
+        <div class="mcm-topic"><div class="mcm-topic-dot"></div><div class="mcm-topic-label">Carreira</div><div class="mcm-topic-sub">Formação de novas líderes no ecossistema</div></div>
+      </div>
+
+      <div class="ds-label">Quote block (fundo azul)</div>
+      <div style="background:var(--blue-dark);border-radius:var(--radius-md);padding:32px 36px;text-align:center;max-width:520px;">
+        <div class="mcm-quote">"A principal plataforma de conteúdo sobre liderança feminina no marketing brasileiro."</div>
+        <div class="mcm-quote-author">mCMOs · Executive Women's Leadership</div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ EVENTOS ════ -->
+    <section class="ds-section" id="eventos">
+      <h2 class="ds-section-title">Eventos</h2>
+      <p class="ds-section-desc">Padrão de listagem de evento com data, tipo, nome e local. Background cinza em hover.</p>
+
+      <div style="max-width:600px;border-top:1px solid var(--gray-200);">
+        <div class="mcm-evento">
+          <div class="mcm-evento-date">
+            <span class="mcm-evento-day">14</span>
+            <span class="mcm-evento-month">Mai</span>
+          </div>
+          <div>
+            <div class="mcm-evento-tipo">Summit · Presencial</div>
+            <div class="mcm-evento-name">mCMOs Round Table</div>
+            <div class="mcm-evento-local">📍 São Paulo, SP · Palácio Tangará</div>
+          </div>
+          <span class="mcm-badge-event">Only guests</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ ICONOGRAFIA ════ -->
+    <section class="ds-section" id="iconografia">
+      <h2 class="ds-section-title">Iconografia</h2>
+      <p class="ds-section-desc">Set de ícones proprietários mCMOs — SVG inline, traço 1.5px, viewport 24×24. Clique para copiar o nome. Use diretamente inline ou como sprite.</p>
+
+      <div class="ds-label" style="margin-bottom:12px;">Navegação & portal</div>
+      <div class="icon-grid" style="margin-bottom:24px;">
+        <div class="icon-item" onclick="copyIcon(this,'mcm-home')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 01-1 1H5a1 1 0 01-1-1v-10.5z"/><path d="M9 22V12h6v10"/></svg><div class="icon-name">mcm-home</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-search')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg><div class="icon-name">mcm-search</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-menu')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="17" y2="17"/></svg><div class="icon-name">mcm-menu</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-close')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg><div class="icon-name">mcm-close</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-arrow-r')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><div class="icon-name">mcm-arrow-r</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-chevron')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg><div class="icon-name">mcm-chevron</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-external')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5H6a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1v-4"/><path d="M14 4h6v6M20 4L11 13"/></svg><div class="icon-name">mcm-external</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-filter')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg><div class="icon-name">mcm-filter</div></div>
+      </div>
+
+      <div class="ds-label" style="margin-bottom:12px;">Comunidade & pessoas</div>
+      <div class="icon-grid" style="margin-bottom:24px;">
+        <div class="icon-item" onclick="copyIcon(this,'mcm-user')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.418 3.582-8 8-8s8 3.582 8 8"/></svg><div class="icon-name">mcm-user</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-users')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3.5"/><path d="M2 21c0-3.866 3.134-7 7-7s7 3.134 7 7"/><circle cx="17" cy="7" r="2.5"/><path d="M22 21c0-2.761-2.239-5-5-5"/></svg><div class="icon-name">mcm-users</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-crown')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18M4 18L3 8l5 4 4-6 4 6 5-4-1 10H4z"/></svg><div class="icon-name">mcm-crown</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-trophy')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v4M8 21h8M6 3H4v5a5 5 0 005 5h6a5 5 0 005-5V3h-2"/><path d="M6 3a3 3 0 000 6M18 3a3 3 0 010 6"/></svg><div class="icon-name">mcm-trophy</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-award')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M8.5 14.5L7 22l5-2 5 2-1.5-7.5"/></svg><div class="icon-name">mcm-award</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-heart')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><div class="icon-name">mcm-heart</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-star')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><div class="icon-name">mcm-star</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-linkedin')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 014 0v4M11 10v7"/></svg><div class="icon-name">mcm-linkedin</div></div>
+      </div>
+
+      <div class="ds-label" style="margin-bottom:12px;">Editorial & conteúdo</div>
+      <div class="icon-grid" style="margin-bottom:24px;">
+        <div class="icon-item" onclick="copyIcon(this,'mcm-article')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg><div class="icon-name">mcm-article</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-quote')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11c0-2.21 1.79-4 4-4h.01M3 11v6h4l-2 4M14 11c0-2.21 1.79-4 4-4h.01M14 11v6h4l-2 4"/></svg><div class="icon-name">mcm-quote</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-bookmark')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14a1 1 0 011 1v17l-7-4-7 4V4a1 1 0 011-1z"/></svg><div class="icon-name">mcm-bookmark</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-tag')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><circle cx="7" cy="7" r="1.5" fill="currentColor" stroke="none"/></svg><div class="icon-name">mcm-tag</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-headphones')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3v5zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3v5z"/></svg><div class="icon-name">mcm-headphones</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-play')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg><div class="icon-name">mcm-play</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-download')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5M3 20h18"/></svg><div class="icon-name">mcm-download</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-share')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.5 10.5l7-4M8.5 13.5l7 4"/></svg><div class="icon-name">mcm-share</div></div>
+      </div>
+
+      <div class="ds-label" style="margin-bottom:12px;">Newsletter & comunicação</div>
+      <div class="icon-grid" style="margin-bottom:24px;">
+        <div class="icon-item" onclick="copyIcon(this,'mcm-mail')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg><div class="icon-name">mcm-mail</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-send')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg><div class="icon-name">mcm-send</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-bell')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg><div class="icon-name">mcm-bell</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-message')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"/></svg><div class="icon-name">mcm-message</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-mic')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0M12 19v3M9 22h6"/></svg><div class="icon-name">mcm-mic</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-rss')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 019 9M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1.5" fill="currentColor" stroke="none"/></svg><div class="icon-name">mcm-rss</div></div>
+      </div>
+
+      <div class="ds-label" style="margin-bottom:12px;">Eventos & agenda</div>
+      <div class="icon-grid" style="margin-bottom:24px;">
+        <div class="icon-item" onclick="copyIcon(this,'mcm-calendar')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><div class="icon-name">mcm-calendar</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-clock')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><div class="icon-name">mcm-clock</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-pin')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1118 0z"/><circle cx="12" cy="10" r="2.5"/></svg><div class="icon-name">mcm-pin</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-ticket')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a2 2 0 010-4h20a2 2 0 010 4M2 15a2 2 0 000 4h20a2 2 0 000-4"/><path d="M2 9v6M22 9v6" stroke-dasharray="3 3"/></svg><div class="icon-name">mcm-ticket</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-guests')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 5-5"/></svg><div class="icon-name">mcm-guests</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-confetti')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L8 4l12 12L8 20H4z"/><path d="M8.5 8.5l3 3"/><circle cx="16" cy="8" r="1" fill="currentColor" stroke="none"/><circle cx="8" cy="16" r="1" fill="currentColor" stroke="none"/><circle cx="19" cy="5" r="1" fill="currentColor" stroke="none"/></svg><div class="icon-name">mcm-confetti</div></div>
+      </div>
+
+      <div class="ds-label" style="margin-bottom:12px;">Marketing & estratégia</div>
+      <div class="icon-grid" style="margin-bottom:24px;">
+        <div class="icon-item" onclick="copyIcon(this,'mcm-chart')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20V8l5 5 4-8 5 6 4-4"/></svg><div class="icon-name">mcm-chart</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-trend')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 6l-9.5 9.5L9 11 1 18"/><path d="M17 6h6v6"/></svg><div class="icon-name">mcm-trend</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-target')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg><div class="icon-name">mcm-target</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-rocket')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c4 0 8 4 8 9v1l-4 4H8l-4-4v-1c0-5 4-9 8-9z"/><path d="M8 15l-3 5M16 15l3 5"/><circle cx="12" cy="10" r="2"/></svg><div class="icon-name">mcm-rocket</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-bulb')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21h6M12 3a6 6 0 016 6c0 2.22-1.21 4.15-3 5.19V17H9v-2.81C7.21 13.15 6 11.22 6 9a6 6 0 016-6z"/></svg><div class="icon-name">mcm-bulb</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-ai')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M7 7V5a2 2 0 014 0v2M13 7V5a2 2 0 014 0v2"/><circle cx="8.5" cy="13" r="1.5"/><circle cx="15.5" cy="13" r="1.5"/><path d="M8.5 13h7"/></svg><div class="icon-name">mcm-ai</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-data')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg><div class="icon-name">mcm-data</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-briefcase')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2M2 13h20"/></svg><div class="icon-name">mcm-briefcase</div></div>
+      </div>
+
+      <div class="ds-label" style="margin-bottom:12px;">Status & feedback</div>
+      <div class="icon-grid" style="margin-bottom:32px;">
+        <div class="icon-item" onclick="copyIcon(this,'mcm-check')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg><div class="icon-name">mcm-check</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-soon')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/><circle cx="18.5" cy="5.5" r="2" fill="currentColor" stroke="none"/></svg><div class="icon-name">mcm-soon</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-info')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg><div class="icon-name">mcm-info</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-lock')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><div class="icon-name">mcm-lock</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-eye')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><div class="icon-name">mcm-eye</div></div>
+        <div class="icon-item" onclick="copyIcon(this,'mcm-refresh')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"/></svg><div class="icon-name">mcm-refresh</div></div>
+      </div>
+
+      <!-- Uso em contexto com ícones proprietários -->
+      <div class="ds-label" style="margin-bottom:16px;">Uso em contexto</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="background:var(--black);border-radius:var(--radius-md);padding:14px 20px;display:flex;align-items:center;justify-content:center;gap:0;">
+          <div style="display:flex;gap:0;list-style:none;">
+            <a style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:rgba(255,255,255,.55);padding:0 14px;height:44px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5V21a1 1 0 01-1 1H5a1 1 0 01-1-1v-10.5z"/><path d="M9 22V12h6v10"/></svg> Início</a>
+            <a style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--orange);padding:0 14px;height:44px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg> Editorial</a>
+            <a style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:rgba(255,255,255,.55);padding:0 14px;height:44px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18M4 18L3 8l5 4 4-6 4 6 5-4-1 10H4z"/></svg> Top CMOs</a>
+            <a style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:rgba(255,255,255,.55);padding:0 14px;height:44px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Eventos</a>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="mcm-btn-primary" style="display:inline-flex;align-items:center;gap:7px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg> Assinar newsletter</button>
+          <button class="mcm-btn-orange" style="display:inline-flex;align-items:center;gap:7px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.418 3.582-8 8-8s8 3.582 8 8"/></svg> Fazer parte</button>
+          <button class="mcm-btn-ghost" style="display:inline-flex;align-items:center;gap:7px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5M3 20h18"/></svg> Baixar PDF</button>
+          <button class="mcm-btn-ghost" style="display:inline-flex;align-items:center;gap:7px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.5 10.5l7-4M8.5 13.5l7 4"/></svg> Compartilhar</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:12px 16px;background:var(--gray-50);border-radius:var(--radius-md);border:1px solid var(--gray-200);">
+          <span style="font-size:12px;color:var(--gray-500);display:flex;align-items:center;gap:5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21c0-4.418 3.582-8 8-8s8 3.582 8 8"/></svg> Mirle Ferraz</span>
+          <span style="font-size:12px;color:var(--gray-500);display:flex;align-items:center;gap:5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> 21 Mai 2026</span>
+          <span style="font-size:12px;color:var(--gray-500);display:flex;align-items:center;gap:5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> 5 min</span>
+          <span style="font-size:12px;color:var(--gray-500);display:flex;align-items:center;gap:5px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><circle cx="7" cy="7" r="1.5" fill="currentColor" stroke="none"/></svg> Liderança</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ VOZ & TOM ════ -->
+    <section class="ds-section" id="voz">
+      <h2 class="ds-section-title">Voz & Tom</h2>
+      <p class="ds-section-desc">Como o mCMOs se comunica em cada contexto.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px;">
+        <div style="border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:20px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--success);margin-bottom:12px;">✓ Fazemos isso</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:13px;color:var(--gray-700);font-weight:300;line-height:1.5;">· Fala direta, sem rodeios</div>
+            <div style="font-size:13px;color:var(--gray-700);font-weight:300;line-height:1.5;">· Voz editorial com ponto de vista</div>
+            <div style="font-size:13px;color:var(--gray-700);font-weight:300;line-height:1.5;">· Dados e nomes reais</div>
+            <div style="font-size:13px;color:var(--gray-700);font-weight:300;line-height:1.5;">· Temas relevantes para líderes</div>
+            <div style="font-size:13px;color:var(--gray-700);font-weight:300;line-height:1.5;">· Respeito e calorosa proximidade</div>
+          </div>
+        </div>
+        <div style="border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:20px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--error);margin-bottom:12px;">✗ Evitamos isso</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:13px;color:var(--gray-700);font-weight:300;line-height:1.5;">· Discurso genérico de empoderamento</div>
+            <div style="font-size:13px;color:var(--gray-700);font-weight:300;line-height:1.5;">· Jargões corporativos vazios</div>
+            <div style="font-size:13px;color:var(--gray-700);font-weight:300;line-height:1.5;">· Tom panfletário ou militante</div>
+            <div style="font-size:13px;color:var(--gray-700);font-weight:300;line-height:1.5;">· Exclamações e superlativos</div>
+            <div style="font-size:13px;color:var(--gray-700);font-weight:300;line-height:1.5;">· Infantilização do leitor</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-label">Exemplo de voz</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.2);border-radius:var(--radius-md);padding:16px;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--error);margin-bottom:8px;">Evitar</div>
+          <div style="font-size:13px;color:var(--gray-700);font-weight:300;line-height:1.6;">Somos incríveis e estamos aqui para empoderar todas as mulheres do marketing! 🚀💪</div>
+        </div>
+        <div style="background:rgba(22,163,74,.06);border:1px solid rgba(22,163,74,.2);border-radius:var(--radius-md);padding:16px;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--success);margin-bottom:8px;">Preferir</div>
+          <div style="font-size:13px;color:var(--gray-700);font-weight:300;line-height:1.6;">O mCMOs nasceu para dar voz às mulheres que já fazem — e que merecem ser vistas fazendo.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ════ ACESSIBILIDADE ════ -->
+    <section class="ds-section" id="acessibilidade">
+      <h2 class="ds-section-title">Acessibilidade</h2>
+      <p class="ds-section-desc">Contraste mínimo WCAG AA (4.5:1 para texto, 3:1 para UI). Todos os componentes têm foco visível e semântica correta.</p>
+
+      <div class="ds-label">Contraste — pares aprovados</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px;">
+        <div style="border-radius:var(--radius-md);overflow:hidden;">
+          <div style="background:var(--black);padding:16px;"><span style="color:var(--white);font-size:13px;font-weight:500;">Texto branco</span><br><span style="color:rgba(255,255,255,.5);font-size:11px;">em fundo preto · 21:1</span></div>
+        </div>
+        <div style="border-radius:var(--radius-md);overflow:hidden;">
+          <div style="background:var(--orange);padding:16px;"><span style="color:var(--white);font-size:13px;font-weight:700;">Texto branco</span><br><span style="color:rgba(255,255,255,.75);font-size:11px;">em laranja · 3.2:1</span></div>
+        </div>
+        <div style="border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--gray-200);">
+          <div style="background:var(--white);padding:16px;"><span style="color:var(--black);font-size:13px;font-weight:500;">Texto preto</span><br><span style="color:var(--gray-500);font-size:11px;">em fundo branco · 18:1</span></div>
+        </div>
+        <div style="border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--gray-200);">
+          <div style="background:var(--white);padding:16px;"><span style="color:var(--blue-dark);font-size:13px;font-weight:600;">Azul escuro</span><br><span style="color:var(--gray-500);font-size:11px;">em fundo branco · 6.1:1</span></div>
+        </div>
+      </div>
+
+      <div class="ds-label">Regras de contraste</div>
+      <div style="background:var(--gray-50);border-radius:var(--radius-md);padding:20px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:13px;color:var(--gray-700);font-weight:300;">→ Texto de corpo: mínimo 4.5:1 contra o fundo</div>
+        <div style="font-size:13px;color:var(--gray-700);font-weight:300;">→ Labels e metadados: --gray-500 ou mais escuro sobre branco</div>
+        <div style="font-size:13px;color:var(--gray-700);font-weight:300;">→ Placeholders: mínimo rgba(255,255,255,.45) em fundo escuro</div>
+        <div style="font-size:13px;color:var(--gray-700);font-weight:300;">→ Nunca usar --gray-300 (#bbb) como texto</div>
+        <div style="font-size:13px;color:var(--gray-700);font-weight:300;">→ Ícones decorativos: opacidade mínima 0.4 em contexto escuro</div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div style="padding-top:40px;border-top:1px solid var(--gray-200);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <div>
+        <div style="font-family:var(--serif);font-size:18px;letter-spacing:-.02em;margin-bottom:3px;">mCMOs Design System</div>
+        <div style="font-size:11px;color:var(--gray-400);">v1.0 · Maio 2026 · Executive Women's Leadership</div>
+      </div>
+      <div style="font-size:11px;color:var(--gray-400);">mcmos.com.br</div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// copyIcon — copy icon name on click
+function copyIcon(el, name) {
+  navigator.clipboard?.writeText(name).catch(() => {});
+  const label = el.querySelector('.icon-name');
+  const orig = label.textContent;
+  label.textContent = '✓ copiado';
+  label.classList.add('icon-copied');
+  setTimeout(() => { label.textContent = orig; label.classList.remove('icon-copied'); }, 1400);
+}
+
+// Highlight active nav link on scroll
+const sections = document.querySelectorAll('section[id], div[id]');
+const navLinks = document.querySelectorAll('.ds-nav a');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+    }
+  });
+}, { threshold: 0.2, rootMargin: '-64px 0px 0px 0px' });
+sections.forEach(s => io.observe(s));
+</script>
+</body>
+</html>

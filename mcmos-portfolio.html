@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mCMOs — Portfólio de Produtos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Noto+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+
+    :root {
+      --black:      #0d0d0d;
+      --white:      #ffffff;
+      --orange:     #e8843a;
+      --orange-dk:  #d4612a;
+      --blue:       #1a4fba;
+      --blue-mid:   #3a6fd8;
+      --cream:      #f0ede8;
+      --gray-50:    #f8f8f8;
+      --gray-200:   #e0e0e0;
+      --gray-400:   #999;
+      --gray-600:   #555;
+      --serif:      'Noto Serif', Georgia, serif;
+      --sans:       'Noto Sans', system-ui, sans-serif;
+      --max:        1200px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--sans); background: var(--cream); color: var(--black); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 40px; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes lineIn { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+    @keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+
+    .reveal { opacity:0; transform:translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(13,13,13,.92); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      height: 60px; display: flex; align-items: center;
+    }
+    .nav-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between; width: 100%;
+    }
+    .nav-logo {
+      display: flex; align-items: center;
+    }
+    .nav-links {
+      display: flex; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 11.5px; font-weight: 500; color: rgba(255,255,255,.45);
+      letter-spacing: .04em; transition: color .15s;
+    }
+    .nav-links a:hover { color: rgba(255,255,255,.9); }
+    .nav-cta {
+      font-family: var(--sans); font-size: 11px; font-weight: 700;
+      color: var(--black); background: var(--orange);
+      padding: 8px 18px; border-radius: 3px; border: none; cursor: pointer;
+      letter-spacing: .04em; text-transform: uppercase; transition: background .15s;
+    }
+    .nav-cta:hover { background: var(--orange-dk); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--black);
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 100px 0 80px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 60% at 100% 20%, rgba(26,79,186,.18), transparent),
+        radial-gradient(ellipse 50% 50% at 0% 80%, rgba(232,132,58,.12), transparent);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0; pointer-events: none; opacity: .04;
+      background-image: linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .hero-label {
+      font-size: 9px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+      animation: fadeUp .6s .1s ease both;
+    }
+    .hero-label::before { content: ''; width: 24px; height: 1px; background: var(--orange); }
+    .hero-title {
+      font-family: var(--serif); font-size: clamp(42px, 5.5vw, 72px);
+      font-weight: 300; color: #fff; line-height: 1.0; letter-spacing: -.025em;
+      margin-bottom: 24px;
+      animation: fadeUp .6s .2s ease both;
+    }
+    .hero-title em { font-style: italic; color: var(--orange); }
+    .hero-title strong { font-weight: 700; }
+    .hero-desc {
+      font-size: 15px; font-weight: 300; color: rgba(255,255,255,.6);
+      line-height: 1.78; max-width: 480px; margin-bottom: 40px;
+      animation: fadeUp .6s .3s ease both;
+    }
+    .hero-tags {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      animation: fadeUp .6s .4s ease both;
+    }
+    .hero-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 2px;
+      border: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.55);
+      transition: all .2s; cursor: pointer;
+    }
+    .hero-tag:hover { border-color: var(--orange); color: var(--orange); }
+
+    /* Hero right — product count */
+    .hero-right {
+      display: flex; flex-direction: column; gap: 0;
+      animation: fadeUp .6s .35s ease both;
+    }
+    .hero-product-count {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+      background: rgba(255,255,255,.06); border-radius: 8px; overflow: hidden;
+    }
+    .hpc-item {
+      background: rgba(255,255,255,.03); padding: 24px 20px;
+      border: 1px solid rgba(255,255,255,.06); transition: background .2s;
+    }
+    .hpc-item:hover { background: rgba(255,255,255,.07); }
+    .hpc-num {
+      font-family: var(--serif); font-size: 36px; font-weight: 300;
+      color: #fff; display: block; line-height: 1; margin-bottom: 4px;
+    }
+    .hpc-label { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.35); }
+
+    /* ── SECTION HEADER ── */
+    .section-wrap { padding: 96px 0; }
+    .section-wrap.dark { background: var(--black); }
+    .section-wrap.light { background: var(--white); }
+    .section-wrap.cream { background: var(--cream); }
+    .section-wrap.blue { background: var(--blue); }
+
+    .section-header { margin-bottom: 56px; }
+    .section-eyebrow {
+      font-size: 9px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .section-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--orange); }
+    .section-title {
+      font-family: var(--serif); font-size: clamp(28px, 4vw, 48px);
+      font-weight: 300; line-height: 1.1; letter-spacing: -.02em;
+    }
+    .section-title em { font-style: italic; color: var(--orange); }
+    .section-title.on-dark { color: #fff; }
+    .section-title.on-blue { color: #fff; }
+    .section-desc {
+      font-size: 15px; font-weight: 300; color: var(--gray-600);
+      line-height: 1.72; max-width: 580px; margin-top: 14px;
+    }
+    .section-desc.on-dark { color: rgba(255,255,255,.55); }
+    .section-desc.on-blue { color: rgba(255,255,255,.7); }
+
+    /* ── PRODUCT CARD VARIANTS ── */
+
+    /* EVENTOS */
+    .eventos-grid {
+      display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px;
+    }
+    .evento-featured {
+      background: var(--black); border-radius: 10px; overflow: hidden;
+      position: relative;
+    }
+    .evento-featured-cover {
+      height: 220px;
+      background: linear-gradient(135deg, #0a1628 0%, #1a4fba 60%, #3a6fd8 100%);
+      position: relative; overflow: hidden;
+    }
+    .evento-featured-cover::before {
+      content: '21'; position: absolute;
+      font-family: var(--serif); font-size: 180px; font-weight: 700;
+      color: rgba(255,255,255,.06); right: -10px; bottom: -30px; line-height: 1;
+    }
+    .evento-featured-badge {
+      position: absolute; top: 16px; left: 16px;
+      background: var(--orange); color: #fff;
+      font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 2px;
+    }
+    .evento-featured-body { padding: 24px; }
+    .evento-featured-tipo { font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); margin-bottom: 8px; }
+    .evento-featured-title { font-family: var(--serif); font-size: 22px; font-weight: 400; color: #fff; line-height: 1.2; margin-bottom: 10px; }
+    .evento-featured-desc { font-size: 13px; font-weight: 300; color: rgba(255,255,255,.55); line-height: 1.65; margin-bottom: 20px; }
+    .evento-featured-meta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .meta-pill { display: flex; align-items: center; gap: 6px; font-size: 11px; color: rgba(255,255,255,.45); }
+
+    .eventos-side { display: flex; flex-direction: column; gap: 12px; }
+    .evento-card {
+      background: var(--gray-50); border: 1px solid var(--gray-200);
+      border-radius: 8px; padding: 18px 20px;
+      display: flex; gap: 16px; align-items: flex-start;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .evento-card:hover { border-color: var(--blue); box-shadow: 0 4px 20px rgba(26,79,186,.08); }
+    .evento-card-date {
+      background: var(--black); border-radius: 5px; padding: 8px 10px;
+      text-align: center; min-width: 52px; flex-shrink: 0;
+    }
+    .ecd-day { font-family: var(--serif); font-size: 22px; color: #fff; line-height: 1; display: block; }
+    .ecd-month { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.5); display: block; margin-top: 2px; }
+    .evento-card-tipo { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
+    .evento-card-name { font-family: var(--serif); font-size: 15px; font-weight: 400; line-height: 1.25; margin-bottom: 4px; }
+    .evento-card-local { font-size: 11.5px; color: var(--gray-400); }
+
+    /* PESQUISAS */
+    .pesquisas-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 20px;
+    }
+    .pesquisa-card {
+      border-radius: 10px; overflow: hidden;
+      background: var(--white); border: 1px solid var(--gray-200);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .pesquisa-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,.1); }
+    .pesquisa-cover { height: 140px; position: relative; }
+    .pesquisa-cover-num {
+      position: absolute; bottom: 12px; right: 16px;
+      font-family: var(--serif); font-size: 64px; font-weight: 700;
+      color: rgba(255,255,255,.15); line-height: 1;
+    }
+    .pesquisa-badge {
+      position: absolute; top: 12px; left: 12px;
+      font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: #fff; background: rgba(255,255,255,.2); backdrop-filter: blur(8px);
+      padding: 4px 10px; border-radius: 2px;
+    }
+    .pesquisa-body { padding: 18px; }
+    .pesquisa-type { font-size: 9.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); margin-bottom: 6px; }
+    .pesquisa-title { font-family: var(--serif); font-size: 16px; line-height: 1.3; margin-bottom: 8px; }
+    .pesquisa-desc { font-size: 12px; color: var(--gray-600); font-weight: 300; line-height: 1.6; margin-bottom: 14px; }
+    .pesquisa-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--gray-200); font-size: 11px; }
+    .pesquisa-access-free { color: #16a34a; font-weight: 700; }
+    .pesquisa-access-member { color: var(--blue); font-weight: 700; }
+
+    /* LIVRO */
+    .livro-wrap {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .livro-cover-wrap { perspective: 1200px; }
+    .livro-cover {
+      width: 100%; max-width: 320px; margin: 0 auto;
+      aspect-ratio: 3/4;
+      background: linear-gradient(135deg, var(--black) 0%, #1a1a2e 100%);
+      border-radius: 4px 12px 12px 4px;
+      box-shadow: -8px 0 0 rgba(0,0,0,.4), -12px 8px 32px rgba(0,0,0,.3), 24px 24px 48px rgba(0,0,0,.2);
+      position: relative; overflow: hidden;
+      transform: rotateY(-12deg) rotateX(2deg);
+      transition: transform .4s ease;
+    }
+    .livro-cover:hover { transform: rotateY(-4deg) rotateX(1deg); }
+    .livro-cover-spine {
+      position: absolute; left: 0; top: 0; bottom: 0; width: 32px;
+      background: rgba(0,0,0,.4); display: flex; align-items: center; justify-content: center;
+    }
+    .livro-cover-spine-text {
+      font-family: var(--serif); font-size: 10px; font-weight: 700;
+      color: rgba(255,255,255,.6); writing-mode: vertical-rl; text-orientation: mixed;
+      letter-spacing: .1em; text-transform: uppercase;
+    }
+    .livro-cover-inner { padding: 40px 32px 32px 52px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+    .livro-cover-tag { font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; }
+    .livro-cover-title { font-family: var(--serif); font-size: 28px; font-weight: 400; color: #fff; line-height: 1.15; }
+    .livro-cover-title em { font-style: italic; color: var(--orange); }
+    .livro-cover-sub { font-size: 13px; color: rgba(255,255,255,.5); font-weight: 300; margin-top: 8px; line-height: 1.5; }
+    .livro-cover-logo { font-family: var(--serif); font-size: 14px; color: rgba(255,255,255,.4); }
+    .livro-cover-pattern {
+      position: absolute; top: 0; right: 0; bottom: 0; left: 0; pointer-events: none; opacity: .04;
+      background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%);
+      background-size: 12px 12px;
+    }
+    .livro-info {}
+    .livro-status { display: inline-flex; align-items: center; gap: 8px; background: rgba(232,132,58,.1); border: 1px solid rgba(232,132,58,.25); border-radius: 20px; padding: 6px 16px; margin-bottom: 20px; }
+    .livro-status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); }
+    .livro-status-text { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); }
+    .livro-chapters { display: flex; flex-direction: column; gap: 0; margin-top: 28px; }
+    .livro-chapter { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--gray-200); align-items: flex-start; }
+    .livro-chapter-num { font-family: var(--serif); font-size: 11px; color: var(--orange); font-weight: 700; min-width: 24px; padding-top: 2px; }
+    .livro-chapter-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .livro-chapter-desc { font-size: 12px; color: var(--gray-600); font-weight: 300; line-height: 1.5; }
+
+    /* PODCAST */
+    .podcast-wrap {
+      display: grid; grid-template-columns: 380px 1fr; gap: 64px; align-items: start;
+    }
+    .podcast-player {
+      background: var(--black); border-radius: 16px; overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,.3);
+    }
+    .podcast-cover {
+      height: 200px;
+      background: linear-gradient(135deg, #0a1628, #1a4fba, #e8843a);
+      position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
+    }
+    .podcast-cover-logo { font-family: var(--serif); font-size: 48px; color: rgba(255,255,255,.9); letter-spacing: -.03em; }
+    .podcast-cover-wave {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 40px; background: var(--black);
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+    .podcast-body { padding: 20px; }
+    .podcast-ep-label { font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--orange); margin-bottom: 6px; }
+    .podcast-ep-title { font-family: var(--serif); font-size: 16px; color: #fff; line-height: 1.3; margin-bottom: 14px; }
+    .podcast-controls { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .podcast-btn-play {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--orange); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background .15s; flex-shrink: 0;
+    }
+    .podcast-btn-play:hover { background: var(--orange-dk); }
+    .podcast-btn-play svg { width: 16px; height: 16px; fill: #fff; }
+    .podcast-progress { flex: 1; height: 3px; background: rgba(255,255,255,.12); border-radius: 2px; cursor: pointer; }
+    .podcast-progress-fill { width: 35%; height: 100%; background: var(--orange); border-radius: 2px; }
+    .podcast-time { font-size: 10px; color: rgba(255,255,255,.35); }
+    .podcast-guests { display: flex; gap: 8px; flex-wrap: wrap; }
+    .podcast-guest-chip { display: flex; align-items: center; gap: 7px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 5px 12px 5px 5px; }
+    .podcast-guest-av { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 9px; color: #fff; flex-shrink: 0; }
+    .podcast-guest-name { font-size: 11px; color: rgba(255,255,255,.65); font-weight: 300; }
+
+    .podcast-info {}
+    .podcast-episodes { display: flex; flex-direction: column; gap: 0; }
+    .podcast-ep {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.07); cursor: pointer;
+    }
+    .podcast-ep:hover .podcast-ep-name { color: var(--orange); }
+    .podcast-ep-num { font-family: var(--serif); font-size: 18px; color: rgba(255,255,255,.12); min-width: 28px; }
+    .podcast-ep-cat { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
+    .podcast-ep-name { font-family: var(--serif); font-size: 15px; color: rgba(255,255,255,.85); line-height: 1.3; transition: color .15s; }
+    .podcast-ep-duration { font-size: 11px; color: rgba(255,255,255,.3); margin-top: 4px; }
+
+    /* NEWS */
+    .news-grid {
+      display: grid; grid-template-columns: 1.6fr 1fr; gap: 28px;
+    }
+    .news-featured {
+      background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; overflow: hidden;
+      transition: box-shadow .25s;
+    }
+    .news-featured:hover { box-shadow: 0 12px 40px rgba(0,0,0,.08); }
+    .news-featured-cover { height: 200px; position: relative; }
+    .news-featured-badge { position: absolute; top: 14px; left: 14px; background: var(--orange); color: #fff; font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; }
+    .news-featured-body { padding: 24px; }
+    .news-featured-cat { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); margin-bottom: 7px; }
+    .news-featured-title { font-family: var(--serif); font-size: 22px; line-height: 1.25; margin-bottom: 10px; }
+    .news-featured-desc { font-size: 13px; color: var(--gray-600); font-weight: 300; line-height: 1.65; margin-bottom: 16px; }
+    .news-featured-meta { font-size: 11px; color: var(--gray-400); }
+
+    .news-list { display: flex; flex-direction: column; gap: 0; }
+    .news-item { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--gray-200); cursor: pointer; }
+    .news-item:first-child { border-top: 1px solid var(--gray-200); }
+    .news-item:hover .news-item-title { color: var(--blue); }
+    .news-item-num { font-family: var(--serif); font-size: 20px; color: var(--gray-200); min-width: 28px; padding-top: 2px; }
+    .news-item-cat { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
+    .news-item-title { font-family: var(--serif); font-size: 14px; line-height: 1.3; transition: color .15s; }
+    .news-item-meta { font-size: 11px; color: var(--gray-400); margin-top: 4px; }
+
+    /* EXPERIÊNCIAS */
+    .exp-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
+    }
+    .exp-card {
+      border-radius: 10px; padding: 28px 24px;
+      position: relative; overflow: hidden; min-height: 220px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      cursor: pointer; transition: transform .25s;
+    }
+    .exp-card:hover { transform: translateY(-4px); }
+    .exp-card-num {
+      font-family: var(--serif); font-size: 80px; font-weight: 700;
+      position: absolute; bottom: -20px; right: -8px;
+      line-height: 1; opacity: .07; pointer-events: none;
+    }
+    .exp-card-tag { font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 12px; }
+    .exp-card-title { font-family: var(--serif); font-size: 20px; font-weight: 400; line-height: 1.2; margin-bottom: 8px; }
+    .exp-card-desc { font-size: 12.5px; font-weight: 300; line-height: 1.6; opacity: .75; }
+    .exp-card-footer { margin-top: 20px; }
+    .exp-status { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
+    .exp-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+    /* PORTAL */
+    .portal-wrap {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    }
+    .portal-mockup {
+      background: var(--white); border-radius: 12px; overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,.18); transform: perspective(1000px) rotateY(6deg) rotateX(2deg);
+      transition: transform .4s ease;
+    }
+    .portal-mockup:hover { transform: perspective(1000px) rotateY(2deg) rotateX(1deg); }
+    .portal-bar { background: var(--gray-50); padding: 10px 16px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--gray-200); }
+    .portal-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .portal-url { flex: 1; background: var(--white); border: 1px solid var(--gray-200); border-radius: 4px; padding: 4px 10px; font-size: 11px; color: var(--gray-400); margin: 0 8px; }
+    .portal-screen { padding: 0; }
+    .portal-header-mock { background: var(--black); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .portal-logo-mock { font-family: var(--serif); font-size: 18px; color: #fff; letter-spacing: -.02em; }
+    .portal-hero-mock { background: linear-gradient(135deg, #0a1628, #1a4fba); padding: 28px 20px; }
+    .portal-hero-tag { font-size: 8px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--orange); margin-bottom: 8px; }
+    .portal-hero-h { font-family: var(--serif); font-size: 20px; color: #fff; line-height: 1.2; font-weight: 300; }
+    .portal-hero-h em { font-style: italic; color: var(--orange); }
+    .portal-cards-mock { padding: 16px 20px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .portal-card-mock { background: var(--gray-50); border-radius: 4px; padding: 10px; border: 1px solid var(--gray-200); }
+    .portal-card-stripe { height: 3px; border-radius: 2px; margin-bottom: 8px; }
+    .portal-card-line { height: 6px; background: var(--gray-200); border-radius: 2px; margin-bottom: 4px; }
+    .portal-card-line.w80 { width: 80%; }
+    .portal-card-line.w60 { width: 60%; }
+    .portal-card-line.w40 { width: 40%; }
+
+    .portal-features { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+    .portal-feature { display: flex; gap: 16px; align-items: flex-start; }
+    .portal-feature-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .portal-feature-icon svg { width: 18px; height: 18px; }
+    .portal-feature-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+    .portal-feature-desc { font-size: 12.5px; color: var(--gray-600); font-weight: 300; line-height: 1.55; }
+
+    /* ── PARTNERS STRIP ── */
+    .partners-strip { background: var(--black); padding: 40px 0; border-top: 1px solid rgba(255,255,255,.06); }
+    .partners-inner { display: flex; align-items: center; justify-content: center; gap: 64px; flex-wrap: wrap; }
+    .partner-item { text-align: center; }
+    .partner-role { font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.25); margin-bottom: 8px; }
+    .partner-name { font-size: 15px; font-weight: 700; color: rgba(255,255,255,.6); letter-spacing: -.01em; }
+
+    /* ── CTA FINAL ── */
+    .cta-section {
+      background: var(--black); padding: 100px 0; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(26,79,186,.15), transparent);
+    }
+    .cta-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+    .cta-title { font-family: var(--serif); font-size: clamp(28px, 4vw, 48px); font-weight: 300; color: #fff; line-height: 1.1; margin-bottom: 16px; }
+    .cta-title em { font-style: italic; color: var(--orange); }
+    .cta-desc { font-size: 15px; color: rgba(255,255,255,.55); font-weight: 300; line-height: 1.65; margin-bottom: 32px; }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: var(--orange); color: #fff; font-family: var(--sans); font-size: 12px; font-weight: 700; padding: 13px 28px; border-radius: 3px; border: none; cursor: pointer; letter-spacing: .04em; text-transform: uppercase; transition: background .15s; }
+    .btn-primary:hover { background: var(--orange-dk); }
+    .btn-ghost-white { background: transparent; color: rgba(255,255,255,.7); border: 1px solid rgba(255,255,255,.2); font-family: var(--sans); font-size: 12px; font-weight: 500; padding: 13px 28px; border-radius: 3px; cursor: pointer; transition: all .15s; }
+    .btn-ghost-white:hover { border-color: rgba(255,255,255,.6); color: #fff; }
+
+    /* ── FOOTER ── */
+    footer { background: #080808; padding: 32px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-logo { font-family: var(--serif); font-size: 20px; color: rgba(255,255,255,.5); letter-spacing: -.02em; }
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,.2); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .hero-inner, .livro-wrap, .portal-wrap { grid-template-columns: 1fr; gap: 48px; }
+      .eventos-grid, .news-grid { grid-template-columns: 1fr; }
+      .pesquisas-grid, .exp-grid { grid-template-columns: 1fr 1fr; }
+      .podcast-wrap { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .wrap { padding: 0 20px; }
+    }
+    @media (max-width: 600px) {
+      .pesquisas-grid, .exp-grid { grid-template-columns: 1fr; }
+      .hero-product-count { grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; text-align: center; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 243 63.53" height="20" fill="#ffffff">
+        <g><path d="M102.29,16.02c-.71,0-1-.36-1.28-1.28-2.07-6.62-5.27-11.54-10.97-11.54-9.54,0-15.74,11.25-15.74,28.56s6.48,28.56,16.45,28.56c5.91,0,8.26-5.34,10.89-13.18.36-1.07.64-1.49,1.28-1.49.78,0,1.07.43,1.07,1.42,0,1.71-.14,3.28-.14,6.27l.14,4.91c0,2.64-5.7,5.27-13.25,5.27-16.02,0-26.42-12.53-26.42-31.76S74.44,0,90.04,0c7.69,0,13.25,2.64,13.25,5.27l-.14,3.99.14,5.48c0,1-.36,1.28-1,1.28Z"/><path d="M146.9,14.74c-3.49,12.46-8.12,28.49-11.89,39.24-.5,1.42-1.28,1.99-2.71,1.99-1.5,0-2.35-.57-2.85-1.99-4.2-11.96-8.76-26.71-12.61-39.17-.28-1.07-.43-.93-.43.07l-.85,40.31c-.07,3.7,2.78,4.27,5.77,4.84.93.14,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-3.92-.43-6.98-.43-2.42,0-6.27.43-7.05.43-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,2.07-.43,4.42-1.14,4.49-4.84l1-47.5c.07-2.35-1.07-3.28-4.2-3.92-.93-.21-1.42-.64-1.42-1.42s.5-1.21,1.21-1.21c.86,0,2.85.14,6.91.14,2.14,0,3.7-.14,4.7-.14,1.57,0,2.92.71,3.56,2.85l11.04,37.39c.29.85.5.78.71,0l10.75-37.75c.64-2.28,1.14-2.49,2.56-2.49.5,0,3.13.14,5.7.14,3.85,0,5.98-.14,6.84-.14,1,0,1.35.64,1.35,1.14,0,.57-.21,1.07-1.21,1.28-2.56.57-4.77,1.35-4.7,4.13l.93,47.5c.07,3.7,2.28,4.27,4.49,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.98-.43-9.04-.43s-8.26.43-9.04.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,2.07-.5,4.56-1.14,4.49-4.84l-.78-40.45c0-1.14-.14-1-.43,0h-.03Z"/><path d="M165.02,31.83c0-19.3,9.47-31.83,24-31.83s23.93,12.53,23.93,31.83-9.4,31.69-23.93,31.69-24-12.46-24-31.69h0ZM202.98,31.83c0-17.09-5.48-28.63-13.96-28.63s-14.03,11.54-14.03,28.63,5.56,28.49,14.03,28.49,13.96-11.47,13.96-28.49Z"/></g>
+        <g><path d="M2.58,14.78c-.78-.21-1-.64-1-1.21,0-.5.14-1,1.07-1.14,2.78-.43,7.19-1.64,9.12-3.56.43-.43.57-.5.93-.5.57,0,.78.21.78.71v4.63c0,.64.21.64.57.21,2.85-3.49,6.69-5.7,10.82-5.7,5.41,0,9.26,2.56,11.04,7.19.14.36.28.36.5.07,2.85-4.34,6.84-7.26,11.61-7.26,7.62,0,12.46,5.06,12.46,13.67v26.21c0,3.7,2.21,4.49,3.77,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.27-.43-7.98-.43s-7.19.43-7.98.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-26.21c0-5.55-2.56-8.47-6.62-8.47-4.42,0-8.33,3.99-8.33,9.47v25.21c0,3.7,2.21,4.49,3.77,4.84.93.21,1.14.64,1.14,1.21,0,.5-.28,1.14-1.21,1.14-.78,0-4.27-.43-7.98-.43s-7.19.43-7.98.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-26.21c0-5.55-2.28-8.47-6.84-8.47-3.99,0-8.12,2.92-8.12,7.69v26.99c0,3.7,2.21,4.49,3.77,4.84.92.21,1.14.64,1.14,1.21,0,.5-.29,1.14-1.21,1.14-.78,0-4.27-.43-8.05-.43s-7.12.43-7.9.43c-.93,0-1.21-.64-1.21-1.14,0-.57.21-1,1.14-1.21,1.57-.36,3.77-1.14,3.77-4.84v-30.34c0-1.99-.78-2.56-2.35-2.99h.03Z"/><path d="M217.01,52.02c0-1.07.14-2.35.14-4.63,0-2.14-.14-3.56-.14-4.63,0-1.14.57-1.5,1.14-1.5.64,0,1,.43,1.28,1.21,2.06,5.7,4.84,10.18,9.9,10.18,4.06,0,6.62-2.49,6.62-6.69,0-12.82-19.02-11.18-19.02-25.21,0-8.69,5.7-13.1,13.89-13.1,5.55,0,9.47,1.21,9.47,3.42,0,.78-.14,2.28-.14,3.92s.14,2.71.14,3.56c0,.64-.28,1.07-.92,1.07s-.93-.43-1.28-1.21c-2.28-4.98-5.27-7.62-8.83-7.62s-5.48,2.35-5.48,5.91c0,10.19,19.23,9.19,19.23,25.64,0,8.62-6.27,13.53-14.81,13.53-6.27,0-11.18-1.64-11.18-3.85h0Z"/></g>
+      </svg>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#eventos">Eventos</a></li>
+      <li><a href="#pesquisas">Pesquisas</a></li>
+      <li><a href="#livro">Livro</a></li>
+      <li><a href="#podcast">Podcast</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#experiencias">Experiências</a></li>
+      <li><a href="#portal">Portal</a></li>
+      <li><a href="#quem-somos">Quem somos</a></li>
+    </ul>
+    <button class="nav-cta">Fazer parte</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="wrap">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-label">Portfólio de produtos · 2026</div>
+        <h1 class="hero-title">
+          Onde líderes<br>moldam <em>decisões,</em><br><strong>aceleram resultados</strong><br>e influenciam mercados.
+        </h1>
+        <p class="hero-desc">Um ecossistema completo dedicado exclusivamente a mulheres da alta gestão de marketing. Conteúdo, conexão, conhecimento e comunidade — tudo em um só lugar.</p>
+        <div class="hero-tags">
+          <span class="hero-tag">Eventos</span>
+          <span class="hero-tag">Pesquisas</span>
+          <span class="hero-tag">Livro</span>
+          <span class="hero-tag">Podcast</span>
+          <span class="hero-tag">News</span>
+          <span class="hero-tag">Experiências</span>
+          <span class="hero-tag">Portal</span>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-product-count">
+          <div class="hpc-item"><span class="hpc-num">7</span><span class="hpc-label">Produtos</span></div>
+          <div class="hpc-item"><span class="hpc-num">CMOs</span><span class="hpc-label">VPs & Diretoras</span></div>
+          <div class="hpc-item"><span class="hpc-num">100%</span><span class="hpc-label">Curadoria</span></div>
+          <div class="hpc-item"><span class="hpc-num">Only</span><span class="hpc-label">Guests</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTOS -->
+<section class="section-wrap light" id="eventos">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">01 · Produto</div>
+      <h2 class="section-title">Eventos</h2>
+      <p class="section-desc">Encontros restritos e exclusivos para um seleto grupo de CMOs, VPs e Diretoras. Formato presencial, curado, com acesso apenas via convite. Espaços onde conversas de alto nível acontecem com privacidade e profundidade.</p>
+    </div>
+    <div class="eventos-grid reveal">
+      <div class="evento-featured">
+        <div class="evento-featured-cover">
+          <span class="evento-featured-badge">Realizado · 21 Mai 2026</span>
+        </div>
+        <div class="evento-featured-body">
+          <div class="evento-featured-tipo">Round Table · Only Guests · São Paulo</div>
+          <div class="evento-featured-title">mCMOs Round Table —<br>Evento de Lançamento</div>
+          <div class="evento-featured-desc">Um café da manhã exclusivo no Palácio Tangará com ~30 mulheres CMOs, VPs e Diretoras das principais marcas do mercado — MAC, Senna Brands, Tera, MIT, HSM, entre outras.</div>
+          <div class="evento-featured-meta">
+            <span class="meta-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1118 0z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              Palácio Tangará, SP
+            </span>
+            <span class="meta-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+              09h às 12h00
+            </span>
+            <span class="meta-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="7" r="3.5"/><path d="M2 21c0-3.866 3.134-7 7-7s7 3.134 7 7"/><circle cx="17" cy="7" r="2.5"/><path d="M22 21c0-2.761-2.239-5-5-5"/></svg>
+              ~30 convidadas
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="eventos-side">
+        <div class="evento-card">
+          <div class="evento-card-date"><span class="ecd-day">Set</span><span class="ecd-month">2026</span></div>
+          <div>
+            <div class="evento-card-tipo">Conferência · Presencial</div>
+            <div class="evento-card-name">mCMOs Annual Summit</div>
+            <div class="evento-card-local">São Paulo, SP · Em definição</div>
+          </div>
+        </div>
+        <div class="evento-card">
+          <div class="evento-card-date"><span class="ecd-day">Nov</span><span class="ecd-month">2026</span></div>
+          <div>
+            <div class="evento-card-tipo">Jantar · Only Guests</div>
+            <div class="evento-card-name">Mesa Redonda de Fim de Ano</div>
+            <div class="evento-card-local">Rio de Janeiro, RJ · Em definição</div>
+          </div>
+        </div>
+        <div class="evento-card">
+          <div class="evento-card-date"><span class="ecd-day">2027</span><span class="ecd-month">Exp</span></div>
+          <div>
+            <div class="evento-card-tipo">Internacional · Em planejamento</div>
+            <div class="evento-card-name">mCMOs Global Retreat</div>
+            <div class="evento-card-local">Destino a definir · Fora do Brasil</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PESQUISAS -->
+<section class="section-wrap cream" id="pesquisas">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">02 · Produto</div>
+      <h2 class="section-title">Pesquisas & Relatórios</h2>
+      <p class="section-desc">Dados originais, análises aprofundadas e benchmarks que não existiam no mercado. Produzidos com metodologia rigorosa, focados em liderança feminina, remuneração, martech e futuro do marketing.</p>
+    </div>
+    <div class="pesquisas-grid reveal">
+      <div class="pesquisa-card">
+        <div class="pesquisa-cover" style="background:linear-gradient(135deg,#0d1f3c,#1a4fba)">
+          <span class="pesquisa-badge">Flagship · 2026</span>
+          <span class="pesquisa-cover-num">01</span>
+        </div>
+        <div class="pesquisa-body">
+          <div class="pesquisa-type">Relatório Anual</div>
+          <div class="pesquisa-title">CMO Report Brasil 2026: Liderança, Orçamento e Prioridades</div>
+          <div class="pesquisa-desc">Pesquisa exclusiva com 420 executivos de marketing sobre tendências, orçamentos e desafios do setor.</div>
+          <div class="pesquisa-footer"><span>2026 · 68p</span><span class="pesquisa-access-free">Gratuito</span></div>
+        </div>
+      </div>
+      <div class="pesquisa-card">
+        <div class="pesquisa-cover" style="background:linear-gradient(135deg,#e8843a,#d4612a)">
+          <span class="pesquisa-badge">Exclusivo</span>
+          <span class="pesquisa-cover-num">02</span>
+        </div>
+        <div class="pesquisa-body">
+          <div class="pesquisa-type">Remuneração</div>
+          <div class="pesquisa-title">Salários do Marketing Feminino: Gaps e Benchmarks</div>
+          <div class="pesquisa-desc">Análise salarial de 1.200 profissionais por cargo, setor, região e gênero.</div>
+          <div class="pesquisa-footer"><span>2026 · 42p</span><span class="pesquisa-access-member">Membras</span></div>
+        </div>
+      </div>
+      <div class="pesquisa-card">
+        <div class="pesquisa-cover" style="background:linear-gradient(135deg,#2d6a4f,#40916c)">
+          <span class="pesquisa-badge">Em breve</span>
+          <span class="pesquisa-cover-num">03</span>
+        </div>
+        <div class="pesquisa-body">
+          <div class="pesquisa-type">Diversidade · C-Suite</div>
+          <div class="pesquisa-title">Mulheres no C-Suite de Marketing: Diagnóstico 2026</div>
+          <div class="pesquisa-desc">Representatividade feminina nas 500 maiores empresas do Brasil.</div>
+          <div class="pesquisa-footer"><span>2026 · Em prod.</span><span class="pesquisa-access-free">Gratuito</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVRO -->
+<section class="section-wrap dark" id="livro">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">03 · Produto</div>
+      <h2 class="section-title on-dark">Livro</h2>
+      <p class="section-desc on-dark">O primeiro livro do mCMOs — uma obra coletiva escrita pelas líderes que fazem o marketing brasileiro. Histórias reais, perspectivas estratégicas e o que ninguém ainda publicou sobre mulheres no topo do marketing.</p>
+    </div>
+    <div class="livro-wrap reveal">
+      <div class="livro-cover-wrap">
+        <div class="livro-cover">
+          <div class="livro-cover-pattern"></div>
+          <div class="livro-cover-spine"><span class="livro-cover-spine-text">mCMOs</span></div>
+          <div class="livro-cover-inner">
+            <div>
+              <div class="livro-cover-tag">mCMOs · 2026</div>
+              <div class="livro-cover-title">
+                A Voz das<br>Mulheres que<br><em>Moldam o<br>Marketing</em>
+              </div>
+              <div class="livro-cover-sub">Histórias, estratégias e perspectivas das líderes que definem o futuro do setor</div>
+            </div>
+            <div class="livro-cover-logo">mCMOs</div>
+          </div>
+        </div>
+      </div>
+      <div class="livro-info">
+        <div class="livro-status">
+          <div class="livro-status-dot"></div>
+          <span class="livro-status-text">Em produção · Lançamento 2026</span>
+        </div>
+        <h3 style="font-family:var(--serif);font-size:28px;font-weight:300;color:#fff;line-height:1.2;margin-bottom:12px;">A Voz das Mulheres<br>que <em style="font-style:italic;color:var(--orange)">Moldam o Marketing</em></h3>
+        <p style="font-size:14px;font-weight:300;color:rgba(255,255,255,.6);line-height:1.72;margin-bottom:24px;">Uma obra coletiva com vozes das principais CMOs, VPs e Diretoras de marketing do Brasil. Capítulos escritos pelas próprias líderes — sem intermediários, sem ghostwriters.</p>
+        <div class="livro-chapters">
+          <div class="livro-chapter"><div class="livro-chapter-num">01</div><div><div class="livro-chapter-title">A Nova Agenda da CMO</div><div class="livro-chapter-desc">O que mudou, o que ficou e o que ninguém ainda nomeou</div></div></div>
+          <div class="livro-chapter"><div class="livro-chapter-num">02</div><div><div class="livro-chapter-title">Degrau Quebrado</div><div class="livro-chapter-desc">O topo, o que está por vir e o que o mercado ainda não entendeu</div></div></div>
+          <div class="livro-chapter"><div class="livro-chapter-num">03</div><div><div class="livro-chapter-title">Liderança e IA</div><div class="livro-chapter-desc">Como executivas estão reinventando o papel do marketing na era dos agentes</div></div></div>
+          <div class="livro-chapter"><div class="livro-chapter-num">04</div><div><div class="livro-chapter-title">Marca como Ativo Estratégico</div><div class="livro-chapter-desc">Quando branding deixou de ser custo e virou vantagem competitiva</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PODCAST -->
+<section class="section-wrap dark" id="podcast">
+  <div class="wrap" style="border-top:1px solid rgba(255,255,255,.06);padding-top:96px;">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">04 · Produto</div>
+      <h2 class="section-title on-dark">Podcast</h2>
+      <p class="section-desc on-dark">Conversas longas, sem pressa e sem filtro. Cada episódio é uma imersão na trajetória, nas decisões e na visão de uma líder que está redefinindo o marketing brasileiro.</p>
+    </div>
+    <div class="podcast-wrap reveal">
+      <div class="podcast-player">
+        <div class="podcast-cover">
+          <div class="podcast-cover-logo">mCMOs</div>
+          <div class="podcast-cover-wave"></div>
+        </div>
+        <div class="podcast-body">
+          <div class="podcast-ep-label">Episódio 01 · Em breve</div>
+          <div class="podcast-ep-title">"Chegar ao topo não é o suficiente. É preciso mudar o que está lá."</div>
+          <div class="podcast-controls">
+            <div class="podcast-btn-play">
+              <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+            <div class="podcast-progress"><div class="podcast-progress-fill"></div></div>
+            <div class="podcast-time">18:24</div>
+          </div>
+          <div class="podcast-guests">
+            <div class="podcast-guest-chip">
+              <div class="podcast-guest-av" style="background:linear-gradient(135deg,#1a4fba,#3a6fd8)">CB</div>
+              <span class="podcast-guest-name">Camila Besseler</span>
+            </div>
+            <div class="podcast-guest-chip">
+              <div class="podcast-guest-av" style="background:linear-gradient(135deg,#e8843a,#d4612a)">GT</div>
+              <span class="podcast-guest-name">Gabrielle Teco</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="podcast-info">
+        <div style="margin-bottom:28px;">
+          <p style="font-size:14px;font-weight:300;color:rgba(255,255,255,.6);line-height:1.72;">Episódios semanais com CMOs, VPs e líderes de marketing que raramente aparecem em podcasts. Formato longo, editorial, sem patrocinadores no meio da conversa.</p>
+        </div>
+        <div class="podcast-episodes">
+          <div class="podcast-ep">
+            <div class="podcast-ep-num">01</div>
+            <div>
+              <div class="podcast-ep-cat">Liderança</div>
+              <div class="podcast-ep-name">Degrau Quebrado: o topo e o que está por vir</div>
+              <div class="podcast-ep-duration">Em breve · ~45 min</div>
+            </div>
+          </div>
+          <div class="podcast-ep">
+            <div class="podcast-ep-num">02</div>
+            <div>
+              <div class="podcast-ep-cat">Estratégia</div>
+              <div class="podcast-ep-name">A Nova Agenda da CMO: o que mudou e o que ficou</div>
+              <div class="podcast-ep-duration">Em breve · ~50 min</div>
+            </div>
+          </div>
+          <div class="podcast-ep">
+            <div class="podcast-ep-num">03</div>
+            <div>
+              <div class="podcast-ep-cat">Martech & IA</div>
+              <div class="podcast-ep-name">Reputação, Engajamento e Retenção na era algorítmica</div>
+              <div class="podcast-ep-duration">Em breve · ~40 min</div>
+            </div>
+          </div>
+          <div class="podcast-ep">
+            <div class="podcast-ep-num">04</div>
+            <div>
+              <div class="podcast-ep-cat">Carreira</div>
+              <div class="podcast-ep-name">Primeiro ano no C-Suite: o que ninguém te conta antes</div>
+              <div class="podcast-ep-duration">Em breve · ~55 min</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="section-wrap light" id="news">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">05 · Produto</div>
+      <h2 class="section-title">News & Newsletter</h2>
+      <p class="section-desc">O briefing que o mercado lê. Conteúdo editorial semanal com análises, tendências e perspectivas das líderes mais influentes do marketing brasileiro — direto na caixa de entrada toda quarta-feira.</p>
+    </div>
+    <div class="news-grid reveal">
+      <div class="news-featured">
+        <div class="news-featured-cover" style="background:linear-gradient(135deg,#0d1f3c,#1a4fba)">
+          <span class="news-featured-badge">Newsletter · Edição 01</span>
+        </div>
+        <div class="news-featured-body">
+          <div class="news-featured-cat">Lançamento · Especial</div>
+          <div class="news-featured-title">Chegamos. E já temos muito a dizer.</div>
+          <div class="news-featured-desc">O mCMOs nasceu na última sexta. Em menos de uma semana, já temos um evento marcado, painéis incríveis e histórias que precisam ser contadas. Esta é a edição zero — e é só o começo.</div>
+          <div class="news-featured-meta">Mai 2026 · Mirle Ferraz · 5 min de leitura</div>
+        </div>
+      </div>
+      <div class="news-list">
+        <div class="news-item">
+          <div class="news-item-num">01</div>
+          <div>
+            <div class="news-item-cat">Liderança</div>
+            <div class="news-item-title">A CEO que chegou quando a família saiu: Gabriela Rizzo e a Malwee</div>
+            <div class="news-item-meta">Mai 2026 · 6 min</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <div class="news-item-num">02</div>
+          <div>
+            <div class="news-item-cat">Marketing</div>
+            <div class="news-item-title">Empreendendo com bebê no colo: Thalita Tomé na Tera</div>
+            <div class="news-item-meta">Mai 2026 · 5 min</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <div class="news-item-num">03</div>
+          <div>
+            <div class="news-item-cat">Diversidade</div>
+            <div class="news-item-title">A cobrança invisível que ainda afasta mulheres do topo</div>
+            <div class="news-item-meta">Mai 2026 · 4 min</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <div class="news-item-num">04</div>
+          <div>
+            <div class="news-item-cat">Gestão</div>
+            <div class="news-item-title">Liderar é construir pessoas: o que aprendi com minhas filhas</div>
+            <div class="news-item-meta">Mai 2026 · 4 min</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <div class="news-item-num">05</div>
+          <div>
+            <div class="news-item-cat">Tecnologia</div>
+            <div class="news-item-title">Beatriz Oliveira: do marketing que executa à liderança estratégica</div>
+            <div class="news-item-meta">Mai 2026 · 7 min</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIÊNCIAS -->
+<section class="section-wrap cream" id="experiencias">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">06 · Produto</div>
+      <h2 class="section-title">Experiências</h2>
+      <p class="section-desc">Além dos eventos, o mCMOs cria formatos exclusivos de imersão, aprendizado acelerado e conexão profunda. Cada experiência é projetada para o nível estratégico das membras.</p>
+    </div>
+    <div class="exp-grid reveal">
+      <div class="exp-card" style="background:var(--black);color:#fff;">
+        <div>
+          <div class="exp-card-tag" style="color:var(--orange)">Formação executiva</div>
+          <div class="exp-card-title">Masterclass mCMOs</div>
+          <div class="exp-card-desc">Sessões intensivas com especialistas globais em temas críticos para CMOs: IA aplicada, brand equity, growth e dados.</div>
+        </div>
+        <div class="exp-card-footer">
+          <div class="exp-status" style="color:#e8843a;">Em desenvolvimento</div>
+        </div>
+        <div class="exp-card-num" style="color:#fff;">01</div>
+      </div>
+      <div class="exp-card" style="background:var(--blue);color:#fff;">
+        <div>
+          <div class="exp-card-tag" style="color:rgba(255,255,255,.6)">Networking estratégico</div>
+          <div class="exp-card-title">Board de Pares</div>
+          <div class="exp-card-desc">Grupos fechados de 8 a 12 executivas que se reúnem mensalmente para trocas confidenciais sobre desafios reais de liderança.</div>
+        </div>
+        <div class="exp-card-footer">
+          <div class="exp-status" style="color:rgba(255,255,255,.7);">Em breve</div>
+        </div>
+        <div class="exp-card-num" style="color:#fff;">02</div>
+      </div>
+      <div class="exp-card" style="background:var(--white);border:1px solid var(--gray-200);">
+        <div>
+          <div class="exp-card-tag" style="color:var(--orange)">Mentoria</div>
+          <div class="exp-card-title">mCMOs Mentorship</div>
+          <div class="exp-card-desc">Programa estruturado de mentoria entre CMOs sênior e executivas em ascensão. Conexão real, com agenda e metodologia.</div>
+        </div>
+        <div class="exp-card-footer">
+          <div class="exp-status" style="color:#999;">Planejado · 2027</div>
+        </div>
+        <div class="exp-card-num">03</div>
+      </div>
+      <div class="exp-card" style="background:#1a1a2e;color:#fff;">
+        <div>
+          <div class="exp-card-tag" style="color:var(--orange)">Internacional</div>
+          <div class="exp-card-title">Global Immersion</div>
+          <div class="exp-card-desc">Viagens de imersão a centros globais de inovação em marketing: visitas a empresas, encontros com líderes internacionais e agenda editorial.</div>
+        </div>
+        <div class="exp-card-footer">
+          <div class="exp-status" style="color:#e8843a;">Planejado · 2027</div>
+        </div>
+        <div class="exp-card-num" style="color:#fff;">04</div>
+      </div>
+      <div class="exp-card" style="background:var(--cream);border:1px solid var(--gray-200);">
+        <div>
+          <div class="exp-card-tag" style="color:var(--orange)">Conteúdo ao vivo</div>
+          <div class="exp-card-title">Live Sessions</div>
+          <div class="exp-card-desc">Painéis online ao vivo com especialistas e membras. Formato intimista, com perguntas abertas e conversas sem roteiro.</div>
+        </div>
+        <div class="exp-card-footer">
+          <div class="exp-status" style="color:var(--orange);">Em desenvolvimento</div>
+        </div>
+        <div class="exp-card-num">05</div>
+      </div>
+      <div class="exp-card" style="background:var(--orange);color:#fff;">
+        <div>
+          <div class="exp-card-tag" style="color:rgba(255,255,255,.7)">Certificação</div>
+          <div class="exp-card-title">mCMOs Certificate</div>
+          <div class="exp-card-desc">Programa de certificação em liderança estratégica de marketing, desenvolvido com parceiros acadêmicos de referência.</div>
+        </div>
+        <div class="exp-card-footer">
+          <div class="exp-status" style="color:rgba(255,255,255,.8);">Planejado · 2027</div>
+        </div>
+        <div class="exp-card-num" style="color:#fff;">06</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTAL -->
+<section class="section-wrap light" id="portal">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">07 · Produto</div>
+      <h2 class="section-title">Portal & Branded Content</h2>
+      <p class="section-desc">A plataforma editorial do mCMOs — onde conteúdo estratégico, pesquisas, colunas e notícias se encontram. Um ambiente de SEO e GEO otimizado, com branded content para parceiros que querem falar com líderes de marketing.</p>
+    </div>
+    <div class="portal-wrap reveal">
+      <div class="portal-mockup">
+        <div class="portal-bar">
+          <div class="portal-dot" style="background:#ff5f57;"></div>
+          <div class="portal-dot" style="background:#ffbd2e;"></div>
+          <div class="portal-dot" style="background:#28c840;"></div>
+          <div class="portal-url">mcmos.com.br</div>
+        </div>
+        <div class="portal-screen">
+          <div class="portal-header-mock">
+            <div class="portal-logo-mock">mCMOs</div>
+            <div style="display:flex;gap:12px;">
+              <div style="width:40px;height:6px;background:rgba(255,255,255,.15);border-radius:3px;"></div>
+              <div style="width:40px;height:6px;background:rgba(255,255,255,.15);border-radius:3px;"></div>
+              <div style="width:40px;height:6px;background:rgba(255,255,255,.15);border-radius:3px;"></div>
+            </div>
+          </div>
+          <div class="portal-hero-mock">
+            <div class="portal-hero-tag">Liderança · Destaque</div>
+            <div class="portal-hero-h">A CEO que chegou quando<br>a família saiu — <em>Gabriela Rizzo</em></div>
+          </div>
+          <div class="portal-cards-mock">
+            <div class="portal-card-mock"><div class="portal-card-stripe" style="background:#e8843a;"></div><div class="portal-card-line"></div><div class="portal-card-line w80"></div><div class="portal-card-line w60"></div></div>
+            <div class="portal-card-mock"><div class="portal-card-stripe" style="background:#1a4fba;"></div><div class="portal-card-line"></div><div class="portal-card-line w80"></div><div class="portal-card-line w60"></div></div>
+            <div class="portal-card-mock"><div class="portal-card-stripe" style="background:#2d6a4f;"></div><div class="portal-card-line"></div><div class="portal-card-line w80"></div><div class="portal-card-line w60"></div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="portal-features">
+          <div class="portal-feature">
+            <div class="portal-feature-icon" style="background:rgba(232,132,58,.1);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>
+            </div>
+            <div><div class="portal-feature-title">Conteúdo editorial</div><div class="portal-feature-desc">Artigos, colunas, entrevistas e análises produzidas pelas próprias líderes ou pela equipe mCMOs.</div></div>
+          </div>
+          <div class="portal-feature">
+            <div class="portal-feature-icon" style="background:rgba(26,79,186,.1);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="var(--blue)" stroke="none"/></svg>
+            </div>
+            <div><div class="portal-feature-title">SEO & GEO</div><div class="portal-feature-desc">Portal otimizado para mecanismos de busca tradicionais e para respostas geradas por IA (GEO), em parceria com a Conversion Lab.</div></div>
+          </div>
+          <div class="portal-feature">
+            <div class="portal-feature-icon" style="background:rgba(232,132,58,.1);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.5" stroke-linecap="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><circle cx="7" cy="7" r="1.5" fill="var(--orange)" stroke="none"/></svg>
+            </div>
+            <div><div class="portal-feature-title">Branded content</div><div class="portal-feature-desc">Espaço editorial para parceiros que querem se comunicar com CMOs e líderes de marketing com credibilidade e contexto.</div></div>
+          </div>
+          <div class="portal-feature">
+            <div class="portal-feature-icon" style="background:rgba(26,79,186,.1);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </div>
+            <div><div class="portal-feature-title">Pesquisas & downloads</div><div class="portal-feature-desc">Hub centralizado de relatórios, dados e estudos — gratuitos para membras, parte deles abertos ao público.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUEM SOMOS -->
+<section class="section-wrap dark" id="quem-somos">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">A equipe fundadora</div>
+      <h2 class="section-title on-dark">Quem somos</h2>
+      <p class="section-desc on-dark">O mCMOs foi idealizado por mulheres de marketing com uma missão clara: ampliar a presença feminina nos espaços de real decisão, por meio de conexões genuínas baseadas em confiança, troca de valor e inteligência coletiva.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;" class="reveal">
+
+      <!-- Camila -->
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden;transition:background .2s,border-color .2s;" onmouseover="this.style.background='rgba(255,255,255,.07)';this.style.borderColor='rgba(255,255,255,.16)'" onmouseout="this.style.background='rgba(255,255,255,.04)';this.style.borderColor='rgba(255,255,255,.08)'">
+        <div style="height:180px;background:linear-gradient(135deg,#1a4fba,#3a6fd8);position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:flex-end;padding:16px;">
+          <div style="position:absolute;top:-30px;left:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.05);"></div>
+          <div style="font-family:var(--serif);font-size:80px;font-weight:700;color:rgba(255,255,255,.12);position:absolute;bottom:-20px;right:-8px;line-height:1;">CB</div>
+          <a href="https://www.linkedin.com/in/camilabesseler/" target="_blank" style="position:relative;z-index:1;width:32px;height:32px;background:#0a66c2;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:transform .15s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+        <div style="padding:20px 22px 24px;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:5px;">CEO & Founder</div>
+          <div style="font-family:var(--serif);font-size:20px;color:#fff;margin-bottom:3px;font-weight:400;">Camila Besseler</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.4);font-weight:300;margin-bottom:14px;">CMO · Grupo Taking · Consultora</div>
+          <p style="font-size:12.5px;color:rgba(255,255,255,.6);font-weight:300;line-height:1.7;">Especialista global em marketing com quase 25 anos de experiência. Passou por CI&amp;T, Tigre e Fin-X, liderando equipes globais. MBA pela FGV. Idealizou o mCMOs para ampliar a presença feminina nos espaços de real decisão.</p>
+        </div>
+      </div>
+
+      <!-- Mirle -->
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden;transition:background .2s,border-color .2s;" onmouseover="this.style.background='rgba(255,255,255,.07)';this.style.borderColor='rgba(255,255,255,.16)'" onmouseout="this.style.background='rgba(255,255,255,.04)';this.style.borderColor='rgba(255,255,255,.08)'">
+        <div style="height:180px;background:linear-gradient(135deg,#e8843a,#d4612a);position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:flex-end;padding:16px;">
+          <div style="position:absolute;top:-30px;left:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.05);"></div>
+          <div style="font-family:var(--serif);font-size:80px;font-weight:700;color:rgba(255,255,255,.12);position:absolute;bottom:-20px;right:-8px;line-height:1;">MF</div>
+          <a href="https://www.linkedin.com/in/mirleferraz/" target="_blank" style="position:relative;z-index:1;width:32px;height:32px;background:#0a66c2;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:transform .15s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+        <div style="padding:20px 22px 24px;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:5px;">CMO & Co-founder</div>
+          <div style="font-family:var(--serif);font-size:20px;color:#fff;margin-bottom:3px;font-weight:400;">Mirle Ferraz</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.4);font-weight:300;margin-bottom:14px;">Ger. de Opp de Marketing · Grupo Taking</div>
+          <p style="font-size:12.5px;color:rgba(255,255,255,.6);font-weight:300;line-height:1.7;">Profissional de marketing com trajetória sólida em operações e estratégia. Responsável pela estratégia de marketing da comunidade e pela conexão entre executivas, marcas e o ecossistema mCMOs.</p>
+        </div>
+      </div>
+
+      <!-- Taciana -->
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden;transition:background .2s,border-color .2s;" onmouseover="this.style.background='rgba(255,255,255,.07)';this.style.borderColor='rgba(255,255,255,.16)'" onmouseout="this.style.background='rgba(255,255,255,.04)';this.style.borderColor='rgba(255,255,255,.08)'">
+        <div style="height:180px;background:linear-gradient(135deg,#1a1a1a,#3a3a3a);position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:flex-end;padding:16px;">
+          <div style="position:absolute;top:-30px;left:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.05);"></div>
+          <div style="font-family:var(--serif);font-size:80px;font-weight:700;color:rgba(255,255,255,.12);position:absolute;bottom:-20px;right:-8px;line-height:1;">TS</div>
+          <a href="https://www.linkedin.com/in/tacianaserafim/" target="_blank" style="position:relative;z-index:1;width:32px;height:32px;background:#0a66c2;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:transform .15s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+        <div style="padding:20px 22px 24px;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:5px;">Diretora de Comunidade</div>
+          <div style="font-family:var(--serif);font-size:20px;color:#fff;margin-bottom:3px;font-weight:400;">Taciana Serafim</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.4);font-weight:300;margin-bottom:14px;">CEO & Founder · CRO Brasil · Looptmize</div>
+          <p style="font-size:12.5px;color:rgba(255,255,255,.6);font-weight:300;line-height:1.7;">Referência em construção e gestão de comunidades de marketing. Responsável por criar conexões reais entre executivas. Acredita que comunidade é a maior alavanca de crescimento profissional feminino.</p>
+        </div>
+      </div>
+
+      <!-- Mafe -->
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden;transition:background .2s,border-color .2s;" onmouseover="this.style.background='rgba(255,255,255,.07)';this.style.borderColor='rgba(255,255,255,.16)'" onmouseout="this.style.background='rgba(255,255,255,.04)';this.style.borderColor='rgba(255,255,255,.08)'">
+        <div style="height:180px;background:linear-gradient(135deg,#1a4fba,#7ab0cc);position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:flex-end;padding:16px;">
+          <div style="position:absolute;top:-30px;left:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.05);"></div>
+          <div style="font-family:var(--serif);font-size:80px;font-weight:700;color:rgba(255,255,255,.12);position:absolute;bottom:-20px;right:-8px;line-height:1;">ME</div>
+          <a href="https://www.linkedin.com/in/maria-fernanda-espinosa/" target="_blank" style="position:relative;z-index:1;width:32px;height:32px;background:#0a66c2;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:transform .15s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+        <div style="padding:20px 22px 24px;">
+          <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:5px;">Editora Chefe</div>
+          <div style="font-family:var(--serif);font-size:20px;color:#fff;margin-bottom:3px;font-weight:400;">Maria Fernanda Espinosa</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.4);font-weight:300;margin-bottom:14px;">Mafê · mCMOs</div>
+          <p style="font-size:12.5px;color:rgba(255,255,255,.6);font-weight:300;line-height:1.7;">Jornalista e editora com olhar estratégico para conteúdo de negócios e marketing. Responsável pela linha editorial do portal. Especialista em transformar dados em narrativas que movem o mercado.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Missão strip -->
+    <div style="margin-top:40px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:32px 36px;display:grid;grid-template-columns:1fr 1fr;gap:32px;" class="reveal">
+      <div style="border-right:1px solid rgba(255,255,255,.07);padding-right:32px;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;">Missão</div>
+        <p style="font-size:13px;color:rgba(255,255,255,.65);font-weight:300;line-height:1.7;">Ampliar a presença feminina nos espaços de real decisão, por meio de conexões genuínas baseadas em confiança, troca de valor e inteligência coletiva.</p>
+      </div>
+      <div style="padding-left:0;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;">Acesso</div>
+        <p style="font-size:13px;color:rgba(255,255,255,.65);font-weight:300;line-height:1.7;">Não é uma comunidade aspiracional — é uma comunidade de pares. Acesso apenas via indicação, preservando a curadoria e o nível estratégico das trocas.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<div class="partners-strip">
+  <div class="partners-inner">
+    <div class="partner-item">
+      <div class="partner-role">Mantenedor</div>
+      <div class="partner-name">CleverTap</div>
+    </div>
+    <div class="partner-item">
+      <div class="partner-role">Mantenedor</div>
+      <div class="partner-name">CRO Brasil</div>
+    </div>
+    <div class="partner-item">
+      <div class="partner-role">Audiovisual</div>
+      <div class="partner-name">Quebra</div>
+    </div>
+    <div class="partner-item">
+      <div class="partner-role">Comunicação & RP</div>
+      <div class="partner-name">EcoPR</div>
+    </div>
+    <div class="partner-item">
+      <div class="partner-role">Portal, SEO & GEO</div>
+      <div class="partner-name">Conversion Lab</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <h2 class="cta-title">Onde mulheres da alta gestão<br>de marketing <em>se conectam.</em></h2>
+    <p class="cta-desc">Um ecossistema construído por e para as líderes que moldam decisões, aceleram resultados e influenciam mercados.</p>
+    <div class="cta-btns">
+      <button class="btn-primary">Fazer parte</button>
+      <button class="btn-ghost-white">Conhecer o mCMOs →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">mCMOs</div>
+  <span style="font-size:11px;color:rgba(255,255,255,.2);">Executive Women's Leadership Community · mcmos.com.br</span>
+  <span class="footer-copy">© 2026 mCMOs. Todos os direitos reservados.</span>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12, rootMargin: '-32px 0px 0px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Nav active
+const sections = document.querySelectorAll('section[id], div[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) navLinks.forEach(l => {
+      l.style.color = l.getAttribute('href') === '#' + e.target.id ? '#e8843a' : '';
+    });
+  });
+}, { threshold: 0.3, rootMargin: '-60px 0px 0px 0px' });
+sections.forEach(s => io.observe(s));
+</script>
+</body>
+</html>
